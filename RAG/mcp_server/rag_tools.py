@@ -306,7 +306,7 @@ class RAGTools:
         Returns:
             Formatted prompt string
         """
-        prompt = f"""You are a helpful AI assistant. Use the following context to answer the user's question. If the context doesn't contain relevant information, say so.
+        prompt = f"""You are a helpful AI assistant. Use only the following context to answer the user's question. If the context doesn't contain relevant information, say so.
 
 Context:
 {context}
