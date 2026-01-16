@@ -1,0 +1,28 @@
+The A2A Protocol
+
+The Agent-to-Agent (A2A) protocol is a standardized communication framework that enables autonomous agents to interact with each other. It provides a structured way for agents to exchange messages, share information, and coordinate actions.
+
+Key features of A2A:
+- Standardized message format
+- Support for asynchronous communication
+- Built-in error handling
+- Extensible architecture
+
+Model Context Protocol (MCP)
+
+The Model Context Protocol (MCP) is a protocol that allows AI agents to interact with language models and other AI services. It provides a standardized interface for:
+- Querying language models
+- Managing context and conversation history
+- Accessing external tools and data sources
+
+RAG Systems
+
+Retrieval-Augmented Generation (RAG) systems combine information retrieval with language model generation. They work by:
+1. Retrieving relevant documents from a knowledge base
+2. Using the retrieved context to generate informed responses
+3. Providing source citations for transparency
+
+RAG systems are particularly useful for:
+- Question answering over large document collections
+- Reducing hallucinations in LLM responses
+- Keeping information up-to-date without retraining models
