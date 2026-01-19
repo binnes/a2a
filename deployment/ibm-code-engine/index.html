@@ -15,7 +15,7 @@
         <link rel="canonical" href="https://example.com/deployment/ibm-code-engine/">
       
       
-        <link rel="prev" href="../../rag/troubleshooting/">
+        <link rel="prev" href="../local/">
       
       
       
@@ -296,7 +296,7 @@
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="./" class="md-tabs__link">
+        <a href="../local/" class="md-tabs__link">
           
   
   
@@ -887,6 +887,34 @@
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../local/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Local (Podman)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -2614,27 +2642,32 @@
 </thead>
 <tbody>
 <tr>
-<td><code>TZ_RESOURCE_GROUP</code></td>
+<td><code>IBM_RESOURCE_GROUP</code></td>
 <td>IBM Cloud resource group</td>
 <td><code>default</code></td>
 </tr>
 <tr>
-<td><code>TZ_ICR</code></td>
-<td>Container registry URL</td>
-<td><code>de.icr.io</code></td>
+<td><code>IBM_REGION</code></td>
+<td>IBM Cloud region for container registry</td>
+<td><code>eu-gb</code></td>
 </tr>
 <tr>
-<td><code>TZ_NAMESPACE</code></td>
+<td><code>IBM_ICR</code></td>
+<td>Container registry URL</td>
+<td><code>uk.icr.io</code></td>
+</tr>
+<tr>
+<td><code>IBM_NAMESPACE</code></td>
 <td>Registry namespace</td>
 <td><code>my-namespace</code></td>
 </tr>
 <tr>
-<td><code>TZ_ICE_PROJECT</code></td>
+<td><code>IBM_ICE_PROJECT</code></td>
 <td>Code Engine project name</td>
 <td><code>rag-project</code></td>
 </tr>
 <tr>
-<td><code>TZ_API_KEY</code></td>
+<td><code>IBM_API_KEY</code></td>
 <td>IBM Cloud API key</td>
 <td><code>xxx</code></td>
 </tr>
@@ -2654,8 +2687,13 @@
 <td><code>https://us-south.ml.cloud.ibm.com</code></td>
 </tr>
 <tr>
+<td><code>DEPLOY_MILVUS_LOCAL</code></td>
+<td>Deploy Milvus to Code Engine</td>
+<td><code>false</code></td>
+</tr>
+<tr>
 <td><code>MILVUS_HOST</code></td>
-<td>External Milvus host</td>
+<td>Milvus host (external or <code>rag-milvus</code> if local)</td>
 <td><code>milvus.example.com</code></td>
 </tr>
 <tr>
