@@ -128,10 +128,14 @@ curl -X POST http://localhost:8000/tools/rag_index_directory \
 - **Issues**: [GitHub Issues](https://github.com/ibm/a2a-rag-agent/issues)
 - **Troubleshooting**: See [Troubleshooting Guide](../docs/docs/rag/troubleshooting.md)
 
+## Built With
+
+This project was created using **[IBM Bob](https://github.com/ibm/bob)** - an AI-powered development assistant that helps build production-ready applications with best practices and comprehensive documentation.
+
 ## License
 
 Apache 2.0
 
 ---
 
-**Note**: This README provides a quick overview. For comprehensive documentation, see the [MkDocs site](../docs/docs/rag/).
+**Note**: This README provides a quick overview. For comprehensive documentation, see the [MkDocs site](https://binnes.github.io/a2a/).

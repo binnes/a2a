@@ -251,6 +251,10 @@ pip install -r requirements.txt
 pytest tests/ -v
 ```
 
+## Built With
+
+This project was created using **[IBM Bob](https://github.com/ibm/bob)** - an AI-powered development assistant that helps build production-ready applications with best practices and comprehensive documentation.
+
 ## License
 
 Apache License 2.0

@@ -162,6 +162,14 @@ curl -X POST http://localhost:8000/tools/rag_query \
 - **Collaboration**: Enable agents to work together on complex tasks
 - **Production-Ready**: Comprehensive testing, monitoring, and deployment automation
 
----
+## Built With
 
-*Powered by IBM Orchestrate*
+This project was created using **[IBM Bob](https://github.com/ibm/bob)** - an AI-powered development assistant that accelerates development with:
+
+- **Intelligent Code Generation**: Production-ready code following best practices
+- **Comprehensive Documentation**: Automated documentation generation with MkDocs
+- **Testing & Quality**: Built-in testing frameworks and quality assurance
+- **Deployment Automation**: Container builds and deployment scripts
+- **Architecture Design**: Well-structured, maintainable codebases
+
+---
