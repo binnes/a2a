@@ -1,0 +1,3278 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation for AI Agents built on IBM Orchestrate">
+      
+      
+        <meta name="author" content="AI Agents Team">
+      
+      
+        <link rel="canonical" href="https://example.com/deployment/ibm-code-engine/">
+      
+      
+        <link rel="prev" href="../../rag/troubleshooting/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>IBM Code Engine - AI Agents Project Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ibm-code-engine-deployment" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="AI Agents Project Documentation" class="md-header__button md-logo" aria-label="AI Agents Project Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AI Agents Project Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              IBM Code Engine
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../architecture/overview/" class="md-tabs__link">
+          
+  
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../protocols/mcp/" class="md-tabs__link">
+          
+  
+  
+  Protocols
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../rag/overview/" class="md-tabs__link">
+          
+  
+  
+  RAG Agent
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+  Deployment
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="AI Agents Project Documentation" class="md-nav__button md-logo" aria-label="AI Agents Project Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    AI Agents Project Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Architecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/orchestrate/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IBM Orchestrate
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Protocols
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Protocols
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../protocols/mcp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MCP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../protocols/a2a/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    A2A
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RAG Agent
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    RAG Agent
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rag/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rag/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quick Start
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rag/api-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rag/configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rag/testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rag/troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deployment
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IBM Code Engine
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IBM Code Engine
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Prerequisites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#required-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Required Services
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#required-credentials" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Required Credentials
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Start
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quick Start">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-configure-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Configure Environment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-deploy-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Deploy Services
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-verify-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Verify Deployment
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#environment-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Environment Variables
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Environment Variables">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#required-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Required Variables
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optional-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optional Variables
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deployment-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deployment Components
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deployment Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mcp-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MCP Server
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a2a-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A2A Agent
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deployment-process" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deployment Process
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deployment Process">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mcp-server-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MCP Server Deployment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a2a-agent-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A2A Agent Deployment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#master-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Master Deployment
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#container-images" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Container Images
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Container Images">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#multi-stage-build" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multi-Stage Build
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Security Features
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scaling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scaling
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Scaling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#auto-scaling-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Auto-Scaling Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modify-scaling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Modify Scaling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scale-to-zero" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scale to Zero
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Monitoring
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Monitoring">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#application-logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Application Logs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#application-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Application Status
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#health-checks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Health Checks
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#container-build-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Container Build Issues
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deployment-failures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deployment Failures
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#application-not-starting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Application Not Starting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#milvus-connection-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Milvus Connection Issues
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#debug-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Debug Mode
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#updates-and-rollbacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Updates and Rollbacks
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Updates and Rollbacks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#update-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Update Deployment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rollback-to-previous-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rollback to Previous Version
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#view-revision-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        View Revision History
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#security" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Security
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Security">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best Practices
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#secrets-in-code-engine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Secrets in Code Engine
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cost-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cost Optimization
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cost Optimization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#right-sizing-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Right-Sizing Resources
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scaling-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scaling Strategy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#image-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Image Optimization
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cleanup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cleanup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cleanup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#delete-applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Delete Applications
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-container-images" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Delete Container Images
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#complete-cleanup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Complete Cleanup
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-endpoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        API Endpoints
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="API Endpoints">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mcp-server-endpoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MCP Server Endpoints
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-api-calls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example API Calls
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-tuning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance Tuning
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Performance Tuning">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#optimize-response-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optimize Response Time
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#monitor-performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Monitor Performance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#support" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Support
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Next Steps
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Prerequisites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#required-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Required Services
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#required-credentials" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Required Credentials
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Start
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quick Start">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-configure-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Configure Environment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-deploy-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Deploy Services
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-verify-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Verify Deployment
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#environment-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Environment Variables
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Environment Variables">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#required-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Required Variables
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optional-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optional Variables
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deployment-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deployment Components
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deployment Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mcp-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MCP Server
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a2a-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A2A Agent
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deployment-process" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deployment Process
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deployment Process">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mcp-server-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MCP Server Deployment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a2a-agent-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A2A Agent Deployment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#master-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Master Deployment
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#container-images" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Container Images
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Container Images">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#multi-stage-build" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multi-Stage Build
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Security Features
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scaling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scaling
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Scaling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#auto-scaling-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Auto-Scaling Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modify-scaling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Modify Scaling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scale-to-zero" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scale to Zero
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Monitoring
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Monitoring">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#application-logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Application Logs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#application-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Application Status
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#health-checks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Health Checks
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#container-build-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Container Build Issues
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deployment-failures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deployment Failures
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#application-not-starting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Application Not Starting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#milvus-connection-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Milvus Connection Issues
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#debug-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Debug Mode
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#updates-and-rollbacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Updates and Rollbacks
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Updates and Rollbacks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#update-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Update Deployment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rollback-to-previous-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rollback to Previous Version
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#view-revision-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        View Revision History
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#security" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Security
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Security">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best Practices
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#secrets-in-code-engine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Secrets in Code Engine
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cost-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cost Optimization
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cost Optimization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#right-sizing-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Right-Sizing Resources
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scaling-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scaling Strategy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#image-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Image Optimization
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cleanup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cleanup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cleanup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#delete-applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Delete Applications
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-container-images" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Delete Container Images
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#complete-cleanup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Complete Cleanup
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-endpoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        API Endpoints
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="API Endpoints">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mcp-server-endpoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MCP Server Endpoints
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-api-calls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example API Calls
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-tuning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance Tuning
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Performance Tuning">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#optimize-response-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optimize Response Time
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#monitor-performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Monitor Performance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#support" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Support
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Next Steps
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="ibm-code-engine-deployment">IBM Code Engine Deployment</h1>
+<p>This guide covers deploying the RAG agents (MCP Server and A2A Agent) to IBM Code Engine.</p>
+<h2 id="overview">Overview</h2>
+<p>The deployment package provides a complete, production-ready solution for containerizing and deploying both the MCP Server and A2A Agent to IBM Cloud Code Engine using Red Hat UBI 10 micro base images.</p>
+<h2 id="architecture">Architecture</h2>
+<pre class="mermaid"><code>graph TB
+    subgraph "IBM Code Engine"
+        MCP[MCP Server&lt;br/&gt;FastAPI&lt;br/&gt;Port: 8000]
+        A2A[A2A Agent&lt;br/&gt;LangGraph&lt;br/&gt;Port: 8001]
+        A2A --&gt;|HTTP| MCP
+    end
+
+    MCP --&gt;|API| WX[Watsonx.ai&lt;br/&gt;Embeddings + LLM]
+    MCP --&gt;|Vector DB| MV[Milvus&lt;br/&gt;External]
+
+    style MCP fill:#4285f4
+    style A2A fill:#34a853
+    style WX fill:#fbbc04
+    style MV fill:#ea4335</code></pre>
+<h2 id="prerequisites">Prerequisites</h2>
+<h3 id="required-services">Required Services</h3>
+<ol>
+<li><strong>IBM Cloud Account</strong> with access to:</li>
+<li>IBM Cloud Container Registry</li>
+<li>IBM Code Engine</li>
+<li>
+<p>IBM Watsonx.ai</p>
+</li>
+<li>
+<p><strong>IBM Cloud CLI</strong> with plugins:
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>ibmcloud<span class="w"> </span>plugin<span class="w"> </span>install<span class="w"> </span>container-registry
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>ibmcloud<span class="w"> </span>plugin<span class="w"> </span>install<span class="w"> </span>code-engine
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Podman</strong> (or Docker) installed locally</p>
+</li>
+<li>
+<p><strong>External Milvus Instance</strong> for vector storage</p>
+</li>
+</ol>
+<h3 id="required-credentials">Required Credentials</h3>
+<ul>
+<li>IBM Cloud API key</li>
+<li>Watsonx.ai API key and project ID</li>
+<li>Milvus host and port</li>
+<li>Container Registry namespace</li>
+</ul>
+<h2 id="quick-start">Quick Start</h2>
+<h3 id="1-configure-environment">1. Configure Environment</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nb">cd</span><span class="w"> </span>RAG/deployment/ibm-code-engine
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1"># Copy environment template</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>cp<span class="w"> </span>.env.example<span class="w"> </span>.env
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="c1"># Edit with your credentials</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>nano<span class="w"> </span>.env
+</code></pre></div>
+<h3 id="2-deploy-services">2. Deploy Services</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Deploy both MCP Server and A2A Agent</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>./deploy-all.sh
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># Or deploy individually</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="nb">cd</span><span class="w"> </span>mcp-server<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>./deploy.sh
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="nb">cd</span><span class="w"> </span>a2a-agent<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>./deploy.sh
+</code></pre></div>
+<h3 id="3-verify-deployment">3. Verify Deployment</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># List applications</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>ibmcloud<span class="w"> </span>ce<span class="w"> </span>application<span class="w"> </span>list
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># Check health</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>curl<span class="w"> </span>https://rag-mcp-server.your-region.codeengine.appdomain.cloud/health
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="c1"># View logs</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>ibmcloud<span class="w"> </span>ce<span class="w"> </span>application<span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span>rag-mcp-server
+</code></pre></div>
+<h2 id="configuration">Configuration</h2>
+<h3 id="environment-variables">Environment Variables</h3>
+<h4 id="required-variables">Required Variables</h4>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>TZ_RESOURCE_GROUP</code></td>
+<td>IBM Cloud resource group</td>
+<td><code>default</code></td>
+</tr>
+<tr>
+<td><code>TZ_ICR</code></td>
+<td>Container registry URL</td>
+<td><code>de.icr.io</code></td>
+</tr>
+<tr>
+<td><code>TZ_NAMESPACE</code></td>
+<td>Registry namespace</td>
+<td><code>my-namespace</code></td>
+</tr>
+<tr>
+<td><code>TZ_ICE_PROJECT</code></td>
+<td>Code Engine project name</td>
+<td><code>rag-project</code></td>
+</tr>
+<tr>
+<td><code>TZ_API_KEY</code></td>
+<td>IBM Cloud API key</td>
+<td><code>xxx</code></td>
+</tr>
+<tr>
+<td><code>WATSONX_API_KEY</code></td>
+<td>Watsonx.ai API key</td>
+<td><code>xxx</code></td>
+</tr>
+<tr>
+<td><code>WATSONX_PROJECT_ID</code></td>
+<td>Watsonx.ai project ID</td>
+<td><code>xxx</code></td>
+</tr>
+<tr>
+<td><code>WATSONX_URL</code></td>
+<td>Watsonx.ai endpoint</td>
+<td><code>https://us-south.ml.cloud.ibm.com</code></td>
+</tr>
+<tr>
+<td><code>MILVUS_HOST</code></td>
+<td>External Milvus host</td>
+<td><code>milvus.example.com</code></td>
+</tr>
+<tr>
+<td><code>MILVUS_PORT</code></td>
+<td>Milvus port</td>
+<td><code>19530</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="optional-variables">Optional Variables</h4>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>EMBEDDING_MODEL</code></td>
+<td>Embedding model</td>
+<td><code>ibm/slate-125m-english-rtrvr</code></td>
+</tr>
+<tr>
+<td><code>EMBEDDING_DIMENSION</code></td>
+<td>Vector dimension</td>
+<td><code>384</code></td>
+</tr>
+<tr>
+<td><code>LLM_MODEL</code></td>
+<td>LLM model</td>
+<td><code>ibm/granite-13b-chat-v2</code></td>
+</tr>
+<tr>
+<td><code>LLM_MAX_TOKENS</code></td>
+<td>Max tokens</td>
+<td><code>2048</code></td>
+</tr>
+<tr>
+<td><code>LLM_TEMPERATURE</code></td>
+<td>Temperature</td>
+<td><code>0.7</code></td>
+</tr>
+<tr>
+<td><code>RAG_CHUNK_SIZE</code></td>
+<td>Chunk size</td>
+<td><code>512</code></td>
+</tr>
+<tr>
+<td><code>RAG_CHUNK_OVERLAP</code></td>
+<td>Chunk overlap</td>
+<td><code>50</code></td>
+</tr>
+<tr>
+<td><code>RAG_TOP_K</code></td>
+<td>Top K results</td>
+<td><code>5</code></td>
+</tr>
+<tr>
+<td><code>RAG_SCORE_THRESHOLD</code></td>
+<td>Score threshold</td>
+<td><code>0.7</code></td>
+</tr>
+<tr>
+<td><code>LOG_LEVEL</code></td>
+<td>Logging level</td>
+<td><code>INFO</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="deployment-components">Deployment Components</h2>
+<h3 id="mcp-server">MCP Server</h3>
+<p>The MCP Server provides the RESTful API for RAG operations.</p>
+<p><strong>Container Specifications:</strong>
+- Base: Red Hat UBI 10 micro
+- Port: 8000
+- Resources: 1 vCPU, 2GB RAM
+- Scaling: 1-3 instances
+- Health check: <code>/health</code> endpoint</p>
+<p><strong>Key Features:</strong>
+- FastAPI-based REST API
+- 9 RAG tool endpoints
+- Watsonx.ai integration
+- Milvus vector storage
+- Document processing (PDF, DOCX, TXT, MD)</p>
+<h3 id="a2a-agent">A2A Agent</h3>
+<p>The A2A Agent orchestrates RAG workflows using LangGraph.</p>
+<p><strong>Container Specifications:</strong>
+- Base: Red Hat UBI 10 micro
+- Port: 8001
+- Resources: 1 vCPU, 2GB RAM
+- Scaling: 1-3 instances
+- Health check: Python-based</p>
+<p><strong>Key Features:</strong>
+- LangGraph workflow orchestration
+- A2A protocol support
+- MCP tool client
+- State management
+- Error handling</p>
+<h2 id="deployment-process">Deployment Process</h2>
+<h3 id="mcp-server-deployment">MCP Server Deployment</h3>
+<p>The <code>mcp-server/deploy.sh</code> script:</p>
+<ol>
+<li>Validates environment variables</li>
+<li>Authenticates with IBM Cloud</li>
+<li>Builds container image with Podman</li>
+<li>Pushes to IBM Container Registry</li>
+<li>Creates/updates Code Engine application</li>
+<li>Configures environment variables</li>
+<li>Tests health endpoint</li>
+<li>Reports deployment status</li>
+</ol>
+<h3 id="a2a-agent-deployment">A2A Agent Deployment</h3>
+<p>The <code>a2a-agent/deploy.sh</code> script:</p>
+<ol>
+<li>Validates environment variables</li>
+<li>Authenticates with IBM Cloud</li>
+<li>Builds container image with Podman</li>
+<li>Pushes to IBM Container Registry</li>
+<li>Creates/updates Code Engine application</li>
+<li>Configures environment variables</li>
+<li>Links to MCP Server</li>
+<li>Reports deployment status</li>
+</ol>
+<h3 id="master-deployment">Master Deployment</h3>
+<p>The <code>deploy-all.sh</code> script orchestrates both deployments:</p>
+<ol>
+<li>Deploys MCP Server</li>
+<li>Waits for MCP Server readiness (30s)</li>
+<li>Deploys A2A Agent</li>
+<li>Provides deployment summary</li>
+</ol>
+<h2 id="container-images">Container Images</h2>
+<h3 id="multi-stage-build">Multi-Stage Build</h3>
+<p>Both containers use multi-stage builds for minimal image size:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c"># Stage 1: Build environment</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="k">FROM</span><span class="w"> </span><span class="s">registry.access.redhat.com/ubi10</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s">build</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="c"># Install dependencies and build application</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="c"># Stage 2: Minimal runtime</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="k">FROM</span><span class="w"> </span><span class="s">scratch</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s">image</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="c"># Copy only runtime artifacts</span>
+</code></pre></div>
+<p><strong>Benefits:</strong>
+- Minimal image size
+- Reduced attack surface
+- Faster deployment
+- Lower storage costs</p>
+<h3 id="security-features">Security Features</h3>
+<ul>
+<li>Non-root user (UID 1001)</li>
+<li>Minimal base image (UBI micro)</li>
+<li>No shell or package manager</li>
+<li>Read-only root filesystem compatible</li>
+</ul>
+<h2 id="scaling">Scaling</h2>
+<h3 id="auto-scaling-configuration">Auto-Scaling Configuration</h3>
+<p>Both services auto-scale based on load:</p>
+<ul>
+<li><strong>Minimum instances</strong>: 1</li>
+<li><strong>Maximum instances</strong>: 3</li>
+<li><strong>CPU</strong>: 1 vCPU per instance</li>
+<li><strong>Memory</strong>: 2 GB per instance</li>
+</ul>
+<h3 id="modify-scaling">Modify Scaling</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># Update MCP Server</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>ibmcloud<span class="w"> </span>ce<span class="w"> </span>application<span class="w"> </span>update<span class="w"> </span>rag-mcp-server<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span>--min-scale<span class="w"> </span><span class="m">2</span><span class="w"> </span>--max-scale<span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">  </span>--cpu<span class="w"> </span><span class="m">2</span><span class="w"> </span>--memory<span class="w"> </span>4G
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="c1"># Update A2A Agent</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>ibmcloud<span class="w"> </span>ce<span class="w"> </span>application<span class="w"> </span>update<span class="w"> </span>rag-a2a-agent<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">  </span>--min-scale<span class="w"> </span><span class="m">2</span><span class="w"> </span>--max-scale<span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">  </span>--cpu<span class="w"> </span><span class="m">2</span><span class="w"> </span>--memory<span class="w"> </span>4G
+</code></pre></div>
+<h3 id="scale-to-zero">Scale to Zero</h3>
+<p>For development environments, you can enable scale-to-zero:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>ibmcloud<span class="w"> </span>ce<span class="w"> </span>application<span class="w"> </span>update<span class="w"> </span>rag-mcp-server<span class="w"> </span>--min-scale<span class="w"> </span><span class="m">0</span>
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Production Consideration</p>
+<p>Scale-to-zero is not recommended for production as it introduces cold start latency.</p>
+</div>
+<h2 id="monitoring">Monitoring</h2>
+<h3 id="application-logs">Application Logs</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># Real-time logs</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>ibmcloud<span class="w"> </span>ce<span class="w"> </span>application<span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span>rag-mcp-server<span class="w"> </span>-f
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>ibmcloud<span class="w"> </span>ce<span class="w"> </span>application<span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span>rag-a2a-agent<span class="w"> </span>-f
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="c1"># Recent logs (last 100 lines)</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>ibmcloud<span class="w"> </span>ce<span class="w"> </span>application<span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span>rag-mcp-server<span class="w"> </span>--tail<span class="w"> </span><span class="m">100</span>
+</code></pre></div>
+<h3 id="application-status">Application Status</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># Detailed status</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>ibmcloud<span class="w"> </span>ce<span class="w"> </span>application<span class="w"> </span>get<span class="w"> </span>-n<span class="w"> </span>rag-mcp-server
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>ibmcloud<span class="w"> </span>ce<span class="w"> </span>application<span class="w"> </span>get<span class="w"> </span>-n<span class="w"> </span>rag-a2a-agent
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="c1"># List all applications</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>ibmcloud<span class="w"> </span>ce<span class="w"> </span>application<span class="w"> </span>list
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="c1"># Application events</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>ibmcloud<span class="w"> </span>ce<span class="w"> </span>application<span class="w"> </span>events<span class="w"> </span>-n<span class="w"> </span>rag-mcp-server
+</code></pre></div>
+<h3 id="health-checks">Health Checks</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># MCP Server health</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>curl<span class="w"> </span>https://rag-mcp-server.your-region.codeengine.appdomain.cloud/health
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="c1"># Expected response</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="o">{</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">  </span><span class="s2">&quot;status&quot;</span>:<span class="w"> </span><span class="s2">&quot;healthy&quot;</span>,
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">  </span><span class="s2">&quot;components&quot;</span>:<span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">    </span><span class="s2">&quot;watsonx&quot;</span>:<span class="w"> </span>true,
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">    </span><span class="s2">&quot;milvus&quot;</span>:<span class="w"> </span>true,
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="w">    </span><span class="s2">&quot;document_processor&quot;</span>:<span class="w"> </span><span class="nb">true</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="w">  </span><span class="o">}</span>
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="o">}</span>
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="c1"># MCP Server statistics</span>
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a>curl<span class="w"> </span>https://rag-mcp-server.your-region.codeengine.appdomain.cloud/tools/rag_stats
+</code></pre></div>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="container-build-issues">Container Build Issues</h3>
+<p><strong>Problem</strong>: Build fails with dependency errors</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># Clean build cache</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>podman<span class="w"> </span>system<span class="w"> </span>prune<span class="w"> </span>-a
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="c1"># Rebuild with no cache</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>podman<span class="w"> </span>build<span class="w"> </span>-f<span class="w"> </span>Containerfile<span class="w"> </span>--no-cache<span class="w"> </span>.
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="c1"># Check Podman version</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>podman<span class="w"> </span>--version<span class="w">  </span><span class="c1"># Should be 4.0+</span>
+</code></pre></div>
+<h3 id="deployment-failures">Deployment Failures</h3>
+<p><strong>Problem</strong>: Deployment script fails</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># Verify IBM Cloud login</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>ibmcloud<span class="w"> </span>target
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="c1"># Check Code Engine project</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>ibmcloud<span class="w"> </span>ce<span class="w"> </span>project<span class="w"> </span>list
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>ibmcloud<span class="w"> </span>ce<span class="w"> </span>project<span class="w"> </span><span class="k">select</span><span class="w"> </span>--name<span class="w"> </span>your-project
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="c1"># Verify registry access</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>ibmcloud<span class="w"> </span>cr<span class="w"> </span>login
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>ibmcloud<span class="w"> </span>cr<span class="w"> </span>namespace-list
+</code></pre></div>
+<h3 id="application-not-starting">Application Not Starting</h3>
+<p><strong>Problem</strong>: Application shows as failed</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># Check application logs</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>ibmcloud<span class="w"> </span>ce<span class="w"> </span>application<span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span>rag-mcp-server
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="c1"># Check application events</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>ibmcloud<span class="w"> </span>ce<span class="w"> </span>application<span class="w"> </span>events<span class="w"> </span>-n<span class="w"> </span>rag-mcp-server
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="c1"># Verify environment variables</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>ibmcloud<span class="w"> </span>ce<span class="w"> </span>application<span class="w"> </span>get<span class="w"> </span>-n<span class="w"> </span>rag-mcp-server<span class="w"> </span>-o<span class="w"> </span>yaml
+</code></pre></div>
+<h3 id="milvus-connection-issues">Milvus Connection Issues</h3>
+<p><strong>Problem</strong>: Cannot connect to Milvus</p>
+<ul>
+<li>Verify Milvus is accessible from Code Engine</li>
+<li>Check <code>MILVUS_HOST</code> and <code>MILVUS_PORT</code> in <code>.env</code></li>
+<li>Test connectivity: <code>curl http://MILVUS_HOST:MILVUS_PORT/health</code></li>
+<li>Ensure firewall rules allow Code Engine egress</li>
+</ul>
+<h3 id="debug-mode">Debug Mode</h3>
+<p>Enable debug logging:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>ibmcloud<span class="w"> </span>ce<span class="w"> </span>application<span class="w"> </span>update<span class="w"> </span>rag-mcp-server<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">  </span>--env<span class="w"> </span><span class="nv">LOG_LEVEL</span><span class="o">=</span>DEBUG
+</code></pre></div>
+<h2 id="updates-and-rollbacks">Updates and Rollbacks</h2>
+<h3 id="update-deployment">Update Deployment</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1"># Update MCP Server</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="nb">cd</span><span class="w"> </span>mcp-server<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>./deploy.sh
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="c1"># Update A2A Agent</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="nb">cd</span><span class="w"> </span>a2a-agent<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>./deploy.sh
+</code></pre></div>
+<p>The deployment script automatically:
+- Builds new container image with timestamp tag
+- Pushes to registry
+- Updates Code Engine application
+- Performs health check</p>
+<h3 id="rollback-to-previous-version">Rollback to Previous Version</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1"># List application revisions</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>ibmcloud<span class="w"> </span>ce<span class="w"> </span>application<span class="w"> </span>revisions<span class="w"> </span>-n<span class="w"> </span>rag-mcp-server
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="c1"># Rollback to specific revision</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>ibmcloud<span class="w"> </span>ce<span class="w"> </span>application<span class="w"> </span>update<span class="w"> </span>rag-mcp-server<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="w">  </span>--revision<span class="w"> </span>rag-mcp-server-00002
+</code></pre></div>
+<h3 id="view-revision-history">View Revision History</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c1"># Get revision details</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>ibmcloud<span class="w"> </span>ce<span class="w"> </span>revision<span class="w"> </span>get<span class="w"> </span>rag-mcp-server-00003
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="c1"># Compare revisions</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>ibmcloud<span class="w"> </span>ce<span class="w"> </span>revision<span class="w"> </span>get<span class="w"> </span>rag-mcp-server-00002<span class="w"> </span>-o<span class="w"> </span>yaml<span class="w"> </span>&gt;<span class="w"> </span>rev2.yaml
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>ibmcloud<span class="w"> </span>ce<span class="w"> </span>revision<span class="w"> </span>get<span class="w"> </span>rag-mcp-server-00003<span class="w"> </span>-o<span class="w"> </span>yaml<span class="w"> </span>&gt;<span class="w"> </span>rev3.yaml
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>diff<span class="w"> </span>rev2.yaml<span class="w"> </span>rev3.yaml
+</code></pre></div>
+<h2 id="security">Security</h2>
+<h3 id="best-practices">Best Practices</h3>
+<ol>
+<li><strong>Secrets Management</strong></li>
+<li>Never commit <code>.env</code> file to version control</li>
+<li>Use IBM Cloud Secrets Manager for production</li>
+<li>
+<p>Rotate credentials regularly (90 days)</p>
+</li>
+<li>
+<p><strong>Network Security</strong></p>
+</li>
+<li>Use private endpoints where possible</li>
+<li>Configure appropriate firewall rules</li>
+<li>
+<p>Enable TLS/SSL for all connections</p>
+</li>
+<li>
+<p><strong>Access Control</strong></p>
+</li>
+<li>Apply least privilege principle</li>
+<li>Use IAM roles appropriately</li>
+<li>Enable audit logging</li>
+<li>
+<p>Review access regularly</p>
+</li>
+<li>
+<p><strong>Container Security</strong></p>
+</li>
+<li>Non-root containers (UID 1001)</li>
+<li>Minimal base images</li>
+<li>No shell or package manager</li>
+<li>Regular security updates</li>
+</ol>
+<h3 id="secrets-in-code-engine">Secrets in Code Engine</h3>
+<p>For production, use Code Engine secrets:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="c1"># Create secret from file</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>ibmcloud<span class="w"> </span>ce<span class="w"> </span>secret<span class="w"> </span>create<span class="w"> </span>--name<span class="w"> </span>rag-secrets<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="w">  </span>--from-env-file<span class="w"> </span>.env
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="c1"># Update application to use secret</span>
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>ibmcloud<span class="w"> </span>ce<span class="w"> </span>application<span class="w"> </span>update<span class="w"> </span>rag-mcp-server<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="w">  </span>--env-from-secret<span class="w"> </span>rag-secrets
+</code></pre></div>
+<h2 id="cost-optimization">Cost Optimization</h2>
+<h3 id="right-sizing-resources">Right-Sizing Resources</h3>
+<p>Monitor actual usage and adjust:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="c1"># View metrics</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>ibmcloud<span class="w"> </span>ce<span class="w"> </span>application<span class="w"> </span>get<span class="w"> </span>-n<span class="w"> </span>rag-mcp-server
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="c1"># Adjust based on usage</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>ibmcloud<span class="w"> </span>ce<span class="w"> </span>application<span class="w"> </span>update<span class="w"> </span>rag-mcp-server<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="w">  </span>--cpu<span class="w"> </span><span class="m">0</span>.5<span class="w"> </span>--memory<span class="w"> </span>1G<span class="w">  </span><span class="c1"># Reduce for lower load</span>
+</code></pre></div>
+<h3 id="scaling-strategy">Scaling Strategy</h3>
+<ul>
+<li><strong>Development</strong>: <code>--min-scale 0</code> (scale to zero)</li>
+<li><strong>Staging</strong>: <code>--min-scale 1 --max-scale 2</code></li>
+<li><strong>Production</strong>: <code>--min-scale 2 --max-scale 5</code></li>
+</ul>
+<h3 id="image-optimization">Image Optimization</h3>
+<p>Already implemented:
+- Multi-stage builds
+- Minimal base images (UBI micro)
+- Optimized dependencies
+- No unnecessary packages</p>
+<h2 id="cleanup">Cleanup</h2>
+<h3 id="delete-applications">Delete Applications</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="c1"># Delete MCP Server</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>ibmcloud<span class="w"> </span>ce<span class="w"> </span>application<span class="w"> </span>delete<span class="w"> </span>-n<span class="w"> </span>rag-mcp-server<span class="w"> </span>-f
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="c1"># Delete A2A Agent</span>
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>ibmcloud<span class="w"> </span>ce<span class="w"> </span>application<span class="w"> </span>delete<span class="w"> </span>-n<span class="w"> </span>rag-a2a-agent<span class="w"> </span>-f
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>
+<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="c1"># Delete registry secret</span>
+<a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>ibmcloud<span class="w"> </span>ce<span class="w"> </span>secret<span class="w"> </span>delete<span class="w"> </span>-n<span class="w"> </span>rag-registry-secret<span class="w"> </span>-f
+</code></pre></div>
+<h3 id="delete-container-images">Delete Container Images</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="c1"># List images</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>ibmcloud<span class="w"> </span>cr<span class="w"> </span>image-list<span class="w"> </span>--restrict<span class="w"> </span>your-namespace
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="c1"># Delete specific image</span>
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>ibmcloud<span class="w"> </span>cr<span class="w"> </span>image-rm<span class="w"> </span>de.icr.io/your-namespace/rag-mcp-server:20260119120000
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>
+<a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="c1"># Delete all images for a repository</span>
+<a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a>ibmcloud<span class="w"> </span>cr<span class="w"> </span>image-rm<span class="w"> </span>de.icr.io/your-namespace/rag-mcp-server<span class="w"> </span>--force
+</code></pre></div>
+<h3 id="complete-cleanup">Complete Cleanup</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="c1"># Delete all RAG resources</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>ibmcloud<span class="w"> </span>ce<span class="w"> </span>application<span class="w"> </span>delete<span class="w"> </span>-n<span class="w"> </span>rag-mcp-server<span class="w"> </span>-f
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>ibmcloud<span class="w"> </span>ce<span class="w"> </span>application<span class="w"> </span>delete<span class="w"> </span>-n<span class="w"> </span>rag-a2a-agent<span class="w"> </span>-f
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>ibmcloud<span class="w"> </span>ce<span class="w"> </span>secret<span class="w"> </span>delete<span class="w"> </span>-n<span class="w"> </span>rag-registry-secret<span class="w"> </span>-f
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a><span class="c1"># Clean local images</span>
+<a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>podman<span class="w"> </span>rmi<span class="w"> </span><span class="k">$(</span>podman<span class="w"> </span>images<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>rag-<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">&#39;{print $3}&#39;</span><span class="k">)</span>
+</code></pre></div>
+<h2 id="api-endpoints">API Endpoints</h2>
+<h3 id="mcp-server-endpoints">MCP Server Endpoints</h3>
+<p>Base URL: <code>https://rag-mcp-server.your-region.codeengine.appdomain.cloud</code></p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/</code></td>
+<td>GET</td>
+<td>Server information</td>
+</tr>
+<tr>
+<td><code>/health</code></td>
+<td>GET</td>
+<td>Health check</td>
+</tr>
+<tr>
+<td><code>/docs</code></td>
+<td>GET</td>
+<td>API documentation (Swagger)</td>
+</tr>
+<tr>
+<td><code>/tools</code></td>
+<td>GET</td>
+<td>List available tools</td>
+</tr>
+<tr>
+<td><code>/tools/rag_query</code></td>
+<td>POST</td>
+<td>Query with LLM generation</td>
+</tr>
+<tr>
+<td><code>/tools/rag_search</code></td>
+<td>POST</td>
+<td>Semantic search only</td>
+</tr>
+<tr>
+<td><code>/tools/rag_index</code></td>
+<td>POST</td>
+<td>Index single document</td>
+</tr>
+<tr>
+<td><code>/tools/rag_index_directory</code></td>
+<td>POST</td>
+<td>Index directory</td>
+</tr>
+<tr>
+<td><code>/tools/rag_stats</code></td>
+<td>GET</td>
+<td>Knowledge base statistics</td>
+</tr>
+<tr>
+<td><code>/tools/rag_clear</code></td>
+<td>DELETE</td>
+<td>Clear knowledge base</td>
+</tr>
+</tbody>
+</table>
+<h3 id="example-api-calls">Example API Calls</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="c1"># Query endpoint</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>https://rag-mcp-server.your-region.codeengine.appdomain.cloud/tools/rag_query<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a><span class="s1">    &quot;query&quot;: &quot;What is the A2A protocol?&quot;,</span>
+<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a><span class="s1">    &quot;top_k&quot;: 5,</span>
+<a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a><span class="s1">    &quot;include_sources&quot;: true</span>
+<a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a><span class="s1">  }&#39;</span>
+<a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a>
+<a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a><span class="c1"># Search endpoint</span>
+<a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>https://rag-mcp-server.your-region.codeengine.appdomain.cloud/tools/rag_search<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-22-12" name="__codelineno-22-12" href="#__codelineno-22-12"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-22-13" name="__codelineno-22-13" href="#__codelineno-22-13"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
+<a id="__codelineno-22-14" name="__codelineno-22-14" href="#__codelineno-22-14"></a><span class="s1">    &quot;query&quot;: &quot;agent communication&quot;,</span>
+<a id="__codelineno-22-15" name="__codelineno-22-15" href="#__codelineno-22-15"></a><span class="s1">    &quot;top_k&quot;: 3</span>
+<a id="__codelineno-22-16" name="__codelineno-22-16" href="#__codelineno-22-16"></a><span class="s1">  }&#39;</span>
+<a id="__codelineno-22-17" name="__codelineno-22-17" href="#__codelineno-22-17"></a>
+<a id="__codelineno-22-18" name="__codelineno-22-18" href="#__codelineno-22-18"></a><span class="c1"># Stats endpoint</span>
+<a id="__codelineno-22-19" name="__codelineno-22-19" href="#__codelineno-22-19"></a>curl<span class="w"> </span>https://rag-mcp-server.your-region.codeengine.appdomain.cloud/tools/rag_stats
+</code></pre></div>
+<h2 id="performance-tuning">Performance Tuning</h2>
+<h3 id="optimize-response-time">Optimize Response Time</h3>
+<ol>
+<li>
+<p><strong>Increase Resources</strong>
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>ibmcloud<span class="w"> </span>ce<span class="w"> </span>application<span class="w"> </span>update<span class="w"> </span>rag-mcp-server<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="w">  </span>--cpu<span class="w"> </span><span class="m">2</span><span class="w"> </span>--memory<span class="w"> </span>4G
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Increase Min Scale</strong>
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>ibmcloud<span class="w"> </span>ce<span class="w"> </span>application<span class="w"> </span>update<span class="w"> </span>rag-mcp-server<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="w">  </span>--min-scale<span class="w"> </span><span class="m">2</span>
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Optimize RAG Parameters</strong></p>
+</li>
+<li>Reduce <code>RAG_TOP_K</code> for faster queries</li>
+<li>Increase <code>RAG_SCORE_THRESHOLD</code> for better quality</li>
+<li>Adjust <code>RAG_CHUNK_SIZE</code> based on content</li>
+</ol>
+<h3 id="monitor-performance">Monitor Performance</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="c1"># View application metrics</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>ibmcloud<span class="w"> </span>ce<span class="w"> </span>application<span class="w"> </span>get<span class="w"> </span>-n<span class="w"> </span>rag-mcp-server
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="c1"># Check response times in logs</span>
+<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>ibmcloud<span class="w"> </span>ce<span class="w"> </span>application<span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span>rag-mcp-server<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">&quot;response_time&quot;</span>
+</code></pre></div>
+<h2 id="support">Support</h2>
+<ul>
+<li><strong>Documentation</strong>: This guide and <a href="../../rag/overview/">RAG Overview</a></li>
+<li><strong>IBM Cloud Docs</strong>: <a href="https://cloud.ibm.com/docs/codeengine">Code Engine Documentation</a></li>
+<li><strong>Troubleshooting</strong>: <a href="../../rag/troubleshooting/">RAG Troubleshooting</a></li>
+<li><strong>API Reference</strong>: <a href="../../rag/api-reference/">RAG API Reference</a></li>
+</ul>
+<h2 id="next-steps">Next Steps</h2>
+<ol>
+<li>Review <a href="../../rag/overview/">RAG Overview</a> for system architecture</li>
+<li>See <a href="../../rag/configuration/">RAG Configuration</a> for tuning options</li>
+<li>Check <a href="../../rag/testing/">RAG Testing</a> for validation procedures</li>
+<li>Consult <a href="../../rag/troubleshooting/">RAG Troubleshooting</a> for common issues</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 AI Agents Team
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/yourusername/yourrepo" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://twitter.com/yourusername" target="_blank" rel="noopener" title="twitter.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
