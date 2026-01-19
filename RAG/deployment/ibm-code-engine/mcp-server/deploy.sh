@@ -15,11 +15,12 @@ fi
 
 # Validate required environment variables
 REQUIRED_VARS=(
-    "TZ_RESOURCE_GROUP"
-    "TZ_ICR"
-    "TZ_NAMESPACE"
-    "TZ_ICE_PROJECT"
-    "TZ_API_KEY"
+    "IBM_RESOURCE_GROUP"
+    "IBM_REGION"
+    "IBM_ICR"
+    "IBM_NAMESPACE"
+    "IBM_ICE_PROJECT"
+    "IBM_API_KEY"
     "WATSONX_API_KEY"
     "WATSONX_PROJECT_ID"
     "WATSONX_URL"
@@ -37,8 +38,8 @@ done
 # Generate timestamp for image tagging
 TIMESTAMP=$(date +"%Y%m%d%H%M%S")
 IMAGE_NAME="rag-mcp-server"
-FULL_IMAGE_TAG="$TZ_ICR/$TZ_NAMESPACE/$IMAGE_NAME:$TIMESTAMP"
-LATEST_TAG="$TZ_ICR/$TZ_NAMESPACE/$IMAGE_NAME:latest"
+FULL_IMAGE_TAG="$IBM_ICR/$IBM_NAMESPACE/$IMAGE_NAME:$TIMESTAMP"
+LATEST_TAG="$IBM_ICR/$IBM_NAMESPACE/$IMAGE_NAME:latest"
 
 echo '-----------------------------------------------------------'
 echo 'Setting up IBM Cloud access'
@@ -51,8 +52,8 @@ if [[ $(ibmcloud target | grep login) ]]; then
 fi
 
 # Set target resource group and region
-ibmcloud target -g "$TZ_RESOURCE_GROUP"
-ibmcloud cr region-set eu-central
+ibmcloud target -g "$IBM_RESOURCE_GROUP"
+ibmcloud cr region-set "$IBM_REGION"
 ibmcloud cr namespace-list
 ibmcloud cr login --client podman
 
@@ -83,7 +84,7 @@ echo 'Configuring IBM Code Engine'
 echo '-----------------------------------------------------------'
 
 # Select Code Engine project
-ibmcloud ce project select --name "$TZ_ICE_PROJECT"
+ibmcloud ce project select --name "$IBM_ICE_PROJECT"
 
 # Create registry secret if it doesn't exist
 if [[ $(ibmcloud ce secret get -n rag-registry-secret 2>&1 | grep 'Resource not found') ]]; then
@@ -91,11 +92,53 @@ if [[ $(ibmcloud ce secret get -n rag-registry-secret 2>&1 | grep 'Resource not 
     ibmcloud ce secret create \
         --format registry \
         --name rag-registry-secret \
-        --server "private.$TZ_ICR" \
+        --server "private.$IBM_ICR" \
         --username iamapikey \
-        --password "$TZ_API_KEY"
+        --password "$IBM_API_KEY"
 else
     echo 'Registry secret already exists'
+fi
+
+echo '-----------------------------------------------------------'
+echo 'Configuring Milvus Connection'
+echo '-----------------------------------------------------------'
+
+# Reload .env to get any updates from Milvus deployment
+if [ -f ../.env ]; then
+    source ../.env
+    echo "✓ Reloaded environment variables from .env"
+else
+    echo "Warning: .env file not found at ../.env"
+    echo "Using environment variables from initial load"
+fi
+
+# Determine Milvus host based on deployment mode
+if [ "$DEPLOY_MILVUS_LOCAL" = "true" ]; then
+    # Get cluster-local URL from Milvus application (address.url field)
+    echo "Retrieving Milvus cluster-local URL..."
+    CLUSTER_LOCAL_URL=$(ibmcloud ce app get --name rag-milvus --output json 2>/dev/null | grep -A1 '"address"' | grep '"url"' | head -1 | grep -o 'http://[^"]*')
+    
+    if [ -n "$CLUSTER_LOCAL_URL" ]; then
+        # Extract hostname from cluster-local URL (remove http:// and port if present)
+        MILVUS_HOST_CONFIG=$(echo "$CLUSTER_LOCAL_URL" | sed 's|http://||' | sed 's|https://||' | cut -d':' -f1)
+        echo "✓ Retrieved cluster-local URL: $CLUSTER_LOCAL_URL"
+    else
+        # Fallback to simple hostname if cluster-local URL not available
+        MILVUS_HOST_CONFIG="rag-milvus"
+        echo "⚠ Could not retrieve cluster-local URL, using fallback: $MILVUS_HOST_CONFIG"
+    fi
+    
+    MILVUS_PORT_CONFIG="19530"
+    echo "Using local Milvus deployment:"
+    echo "  Host: $MILVUS_HOST_CONFIG"
+    echo "  Port: $MILVUS_PORT_CONFIG"
+else
+    # Use values from .env for external Milvus
+    MILVUS_HOST_CONFIG="$MILVUS_HOST"
+    MILVUS_PORT_CONFIG="$MILVUS_PORT"
+    echo "Using external Milvus:"
+    echo "  Host: $MILVUS_HOST_CONFIG"
+    echo "  Port: $MILVUS_PORT_CONFIG"
 fi
 
 echo '-----------------------------------------------------------'
@@ -115,8 +158,8 @@ if [[ $(ibmcloud ce application get -n rag-mcp-server 2>&1 | grep 'Resource not 
         --env WATSONX_API_KEY="$WATSONX_API_KEY" \
         --env WATSONX_PROJECT_ID="$WATSONX_PROJECT_ID" \
         --env WATSONX_URL="$WATSONX_URL" \
-        --env MILVUS_HOST="$MILVUS_HOST" \
-        --env MILVUS_PORT="$MILVUS_PORT" \
+        --env MILVUS_HOST="$MILVUS_HOST_CONFIG" \
+        --env MILVUS_PORT="$MILVUS_PORT_CONFIG" \
         --env MILVUS_COLLECTION_NAME="${MILVUS_COLLECTION_NAME:-rag_knowledge_base}" \
         --env MILVUS_METRIC_TYPE="${MILVUS_METRIC_TYPE:-COSINE}" \
         --env MCP_SERVER_HOST="0.0.0.0" \

@@ -4,6 +4,29 @@ A production-ready Retrieval-Augmented Generation (RAG) agent implementing the A
 
 ## Quick Start
 
+### Local Deployment (Podman)
+
+```bash
+# Deploy locally with automatic Shakespeare data loading
+cd deployment
+./deploy.sh local
+
+# Query Shakespeare
+curl -X POST http://localhost:8000/tools/rag_query \
+  -H "Content-Type: application/json" \
+  -d '{"query": "What did Hamlet say about being?"}'
+```
+
+### IBM Code Engine Deployment
+
+```bash
+# Deploy to IBM Cloud with automatic Shakespeare data loading
+cd deployment
+./deploy.sh ibm-code-engine
+```
+
+### Legacy Setup (Manual)
+
 ```bash
 # 1. Setup
 ./deployment/setup.sh
@@ -40,6 +63,39 @@ User → A2A Agent (LangGraph) → MCP Server (FastAPI) → Watsonx.ai + Milvus
 - Deployment automation
 - Performance optimized
 
+## Deployment Options
+
+### 🏠 Local (Podman)
+
+Best for development and testing. Includes automatic Shakespeare data loading.
+
+```bash
+cd deployment/local
+cp .env.example .env
+# Edit .env with credentials
+./deploy.sh
+```
+
+**Services:**
+- Milvus: http://localhost:19530
+- MCP Server: http://localhost:8000
+- A2A Agent: http://localhost:8001
+
+**Documentation:** [Local Deployment Guide](../docs/docs/deployment/local.md)
+
+### ☁️ IBM Code Engine
+
+Best for production and demos. Includes automatic Shakespeare data loading via job.
+
+```bash
+cd deployment/ibm-code-engine
+cp .env.example .env
+# Edit .env with credentials
+./deploy-all.sh
+```
+
+**Documentation:** [IBM Code Engine Guide](../docs/docs/deployment/ibm-code-engine.md)
+
 ## Documentation
 
 📚 **Complete documentation available in the MkDocs site:**
@@ -50,6 +106,8 @@ User → A2A Agent (LangGraph) → MCP Server (FastAPI) → Watsonx.ai + Milvus
 - **[Configuration](../docs/docs/rag/configuration.md)** - Configuration options
 - **[Testing](../docs/docs/rag/testing.md)** - Testing guide
 - **[Troubleshooting](../docs/docs/rag/troubleshooting.md)** - Common issues
+- **[Local Deployment](../docs/docs/deployment/local.md)** - Deploy with Podman
+- **[IBM Code Engine](../docs/docs/deployment/ibm-code-engine.md)** - Deploy to cloud
 
 ### View Documentation
 
@@ -68,6 +126,8 @@ mkdocs serve
 - **Async Processing**: High-performance concurrent operations
 - **Health Monitoring**: Comprehensive health checks
 - **Error Handling**: Retry logic with exponential backoff
+- **Automatic Data Loading**: Shakespeare text loaded automatically on deployment
+- **Dual Deployment**: Local (Podman) and cloud (IBM Code Engine) options
 
 ## Project Structure
 
@@ -77,10 +137,14 @@ RAG/
 ├── mcp_server/         # MCP server (FastAPI)
 ├── services/           # Core services (Watsonx, Milvus, Document processor)
 ├── config/             # Configuration management
-├── deployment/         # Podman/Docker deployment
+├── deployment/         # Deployment configurations
+│   ├── local/          # Local Podman deployment
+│   ├── ibm-code-engine/# IBM Code Engine deployment
+│   └── deploy.sh       # Unified deployment script
 ├── scripts/            # Utility scripts
 ├── tests/              # Test suite (34 tests)
 └── data/               # Documents and examples
+    └── reference/      # Shakespeare and other reference texts
 ```
 
 ## Requirements

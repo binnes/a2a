@@ -62,6 +62,7 @@ class Settings(BaseSettings):
     # MCP Server Configuration
     mcp_server_host: str = Field(default="0.0.0.0", description="MCP server host")
     mcp_server_port: int = Field(default=8000, description="MCP server port")
+    mcp_server_url: Optional[str] = Field(default=None, description="MCP server URL (overrides host/port)")
     mcp_server_reload: bool = Field(default=False, description="Enable auto-reload")
 
     # A2A Agent Configuration
@@ -93,9 +94,10 @@ class Settings(BaseSettings):
         """Get Milvus connection URI."""
         return f"http://{self.milvus_host}:{self.milvus_port}"
 
-    @property
-    def mcp_server_url(self) -> str:
+    def get_mcp_server_url(self) -> str:
         """Get MCP server URL."""
+        if self.mcp_server_url:
+            return self.mcp_server_url
         return f"http://{self.mcp_server_host}:{self.mcp_server_port}"
 
 

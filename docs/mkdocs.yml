@@ -71,6 +71,7 @@ nav:
       - Testing: rag/testing.md
       - Troubleshooting: rag/troubleshooting.md
   - Deployment:
+      - Local (Podman): deployment/local.md
       - IBM Code Engine: deployment/ibm-code-engine.md
 
 extra:

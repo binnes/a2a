@@ -373,4 +373,18 @@ class MCPServer:
             reload=reload,
         )
 
+if __name__ == "__main__":
+    """Run the MCP server when executed as a module."""
+    import uvicorn  # type: ignore
+    
+    settings = get_settings()
+    logger.info(f"Starting MCP server on {settings.mcp_server_host}:{settings.mcp_server_port}")
+    
+    uvicorn.run(
+        "mcp_server.server:app",
+        host=settings.mcp_server_host,
+        port=settings.mcp_server_port,
+        reload=False,
+    )
+
 # Made with Bob

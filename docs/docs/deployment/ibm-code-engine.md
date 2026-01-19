@@ -97,15 +97,17 @@ ibmcloud ce application logs -n rag-mcp-server
 
 | Variable | Description | Example |
 |----------|-------------|---------|
-| `TZ_RESOURCE_GROUP` | IBM Cloud resource group | `default` |
-| `TZ_ICR` | Container registry URL | `de.icr.io` |
-| `TZ_NAMESPACE` | Registry namespace | `my-namespace` |
-| `TZ_ICE_PROJECT` | Code Engine project name | `rag-project` |
-| `TZ_API_KEY` | IBM Cloud API key | `xxx` |
+| `IBM_RESOURCE_GROUP` | IBM Cloud resource group | `default` |
+| `IBM_REGION` | IBM Cloud region for container registry | `eu-gb` |
+| `IBM_ICR` | Container registry URL | `uk.icr.io` |
+| `IBM_NAMESPACE` | Registry namespace | `my-namespace` |
+| `IBM_ICE_PROJECT` | Code Engine project name | `rag-project` |
+| `IBM_API_KEY` | IBM Cloud API key | `xxx` |
 | `WATSONX_API_KEY` | Watsonx.ai API key | `xxx` |
 | `WATSONX_PROJECT_ID` | Watsonx.ai project ID | `xxx` |
 | `WATSONX_URL` | Watsonx.ai endpoint | `https://us-south.ml.cloud.ibm.com` |
-| `MILVUS_HOST` | External Milvus host | `milvus.example.com` |
+| `DEPLOY_MILVUS_LOCAL` | Deploy Milvus to Code Engine | `false` |
+| `MILVUS_HOST` | Milvus host (external or `rag-milvus` if local) | `milvus.example.com` |
 | `MILVUS_PORT` | Milvus port | `19530` |
 
 #### Optional Variables

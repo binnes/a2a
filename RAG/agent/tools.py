@@ -3,6 +3,7 @@
 import logging
 from typing import Dict, Any, Optional
 import httpx  # type: ignore
+import requests  # type: ignore
 
 from config.settings import Settings
 
@@ -19,8 +20,18 @@ class MCPToolClient:
             settings: Application settings
         """
         self.settings = settings
-        self.base_url = settings.mcp_server_url
-        self.client = httpx.AsyncClient(timeout=30.0)
+        self.base_url = settings.get_mcp_server_url()
+        # Configure httpx for containerized environments
+        # Disable HTTP/2 and configure for simple HTTP/1.1 connections
+        self.client = httpx.AsyncClient(
+            timeout=30.0,
+            http2=False,
+            follow_redirects=True,
+            limits=httpx.Limits(
+                max_keepalive_connections=5,
+                max_connections=10
+            )
+        )
 
     async def rag_query(
         self,
@@ -138,11 +149,15 @@ class MCPToolClient:
             True if healthy, False otherwise
         """
         try:
-            response = await self.client.get(f"{self.base_url}/health")
+            url = f"{self.base_url}/health"
+            logger.debug(f"Checking MCP health at: {url}")
+            # Use requests library for health check as it's more reliable in containers
+            response = requests.get(url, timeout=5)
+            logger.debug(f"MCP health response: {response.status_code}")
             return response.status_code == 200
 
         except Exception as e:
-            logger.error(f"MCP health check failed: {e}")
+            logger.error(f"MCP health check failed: {type(e).__name__}: {e}")
             return False
 
     async def close(self):

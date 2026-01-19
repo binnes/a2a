@@ -16,6 +16,45 @@
    - Added to the navigation in `docs/mkdocs.yml`
    - Properly structured and organized
 
+## Diagram Standards
+
+**CRITICAL RULE**: All diagrams in documentation MUST use Mermaid syntax. Never use ASCII art or text-based diagrams.
+
+### Requirements
+
+1. **Mermaid Only**: All architectural diagrams, flowcharts, and visual representations must use Mermaid
+2. **No ASCII Art**: Never use ASCII art boxes, arrows, or text-based diagrams
+3. **Proper Syntax**: Use appropriate Mermaid diagram types:
+   - `graph` or `flowchart` for architecture diagrams
+   - `sequenceDiagram` for interaction flows
+   - `classDiagram` for class structures
+   - `stateDiagram` for state machines
+
+### Examples
+
+Good (Mermaid):
+```markdown
+```mermaid
+graph LR
+    A[User] --> B[API]
+    B --> C[Database]
+```
+```
+
+Bad (ASCII art):
+```markdown
+┌──────┐     ┌─────┐     ┌──────────┐
+│ User │────►│ API │────►│ Database │
+└──────┘     └─────┘     └──────────┘
+```
+
+### Enforcement
+
+- Review all documentation for ASCII art diagrams
+- Convert existing ASCII art to Mermaid
+- Reject documentation with text-based diagrams
+- Ensure MkDocs has Mermaid support enabled
+
 ### Documentation Structure
 
 ```

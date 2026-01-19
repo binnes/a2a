@@ -1,0 +1,18 @@
+# Milvus Standalone Deployment for IBM Code Engine
+# Based on official Milvus standalone image
+
+FROM milvusdb/milvus:v2.3.3
+
+# Set environment variables for standalone mode
+ENV ETCD_USE_EMBED=true
+ENV COMMON_STORAGETYPE=local
+
+# Expose Milvus ports
+EXPOSE 19530 9091
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=90s --retries=3 \
+  CMD curl -f http://localhost:9091/healthz || exit 1
+
+# Run Milvus in standalone mode
+CMD ["milvus", "run", "standalone"]

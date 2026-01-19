@@ -53,5 +53,5 @@ EXPOSE 8001
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
   CMD python3 -c "import sys; sys.exit(0)"
 
-# Start A2A agent (as a service)
-CMD ["python3", "-m", "agent.a2a_agent"]
+# Start A2A agent server (as a service)
+CMD ["python3", "-m", "agent.server"]
