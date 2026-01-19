@@ -70,6 +70,8 @@ nav:
       - Configuration: rag/configuration.md
       - Testing: rag/testing.md
       - Troubleshooting: rag/troubleshooting.md
+  - Deployment:
+      - IBM Code Engine: deployment/ibm-code-engine.md
 
 extra:
   social:

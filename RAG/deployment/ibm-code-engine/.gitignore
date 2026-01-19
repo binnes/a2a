@@ -1,0 +1,21 @@
+# Environment files with secrets
+.env
+
+# IBM Cloud CLI cache
+.ibmcloud/
+
+# Podman/Docker build cache
+.buildah/
+.docker/
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.bak
+*~
+
+# OS files
+.DS_Store
+Thumbs.db

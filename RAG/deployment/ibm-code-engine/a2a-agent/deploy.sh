@@ -1,0 +1,149 @@
+#!/bin/bash
+
+# A2A Agent Deployment Script for IBM Code Engine
+# This script builds and deploys the A2A Agent container
+
+set -e
+
+# Load environment variables
+if [ -f ../.env ]; then
+    source ../.env
+else
+    echo "Error: .env file not found in parent directory"
+    exit 1
+fi
+
+# Validate required environment variables
+REQUIRED_VARS=(
+    "TZ_RESOURCE_GROUP"
+    "TZ_ICR"
+    "TZ_NAMESPACE"
+    "TZ_ICE_PROJECT"
+    "TZ_API_KEY"
+    "WATSONX_API_KEY"
+    "WATSONX_PROJECT_ID"
+    "WATSONX_URL"
+    "MCP_SERVER_URL"
+)
+
+for var in "${REQUIRED_VARS[@]}"; do
+    if [ -z "${!var}" ]; then
+        echo "Error: Required environment variable $var is not set"
+        exit 1
+    fi
+done
+
+# Generate timestamp for image tagging
+TIMESTAMP=$(date +"%Y%m%d%H%M%S")
+IMAGE_NAME="rag-a2a-agent"
+FULL_IMAGE_TAG="$TZ_ICR/$TZ_NAMESPACE/$IMAGE_NAME:$TIMESTAMP"
+LATEST_TAG="$TZ_ICR/$TZ_NAMESPACE/$IMAGE_NAME:latest"
+
+echo '-----------------------------------------------------------'
+echo 'Setting up IBM Cloud access'
+echo '-----------------------------------------------------------'
+
+# Check if logged in to IBM Cloud
+if [[ $(ibmcloud target | grep login) ]]; then
+    echo 'Please login to ibmcloud cli before running this script'
+    exit 1
+fi
+
+# Set target resource group and region
+ibmcloud target -g "$TZ_RESOURCE_GROUP"
+ibmcloud cr region-set eu-central
+ibmcloud cr namespace-list
+ibmcloud cr login --client podman
+
+echo '-----------------------------------------------------------'
+echo 'Building A2A Agent container'
+echo '-----------------------------------------------------------'
+
+# Navigate to RAG directory
+cd ../../../
+
+# Build container image
+podman build -f deployment/ibm-code-engine/a2a-agent/Containerfile \
+    --tag "$FULL_IMAGE_TAG" \
+    --tag "$LATEST_TAG" \
+    --platform linux/amd64 \
+    .
+
+echo '-----------------------------------------------------------'
+echo "Pushing container to registry: $FULL_IMAGE_TAG"
+echo '-----------------------------------------------------------'
+
+# Push both tags
+podman push "$FULL_IMAGE_TAG"
+podman push "$LATEST_TAG"
+
+echo '-----------------------------------------------------------'
+echo 'Configuring IBM Code Engine'
+echo '-----------------------------------------------------------'
+
+# Select Code Engine project
+ibmcloud ce project select --name "$TZ_ICE_PROJECT"
+
+# Create registry secret if it doesn't exist
+if [[ $(ibmcloud ce secret get -n rag-registry-secret 2>&1 | grep 'Resource not found') ]]; then
+    echo 'Creating IBM Code Engine registry secret'
+    ibmcloud ce secret create \
+        --format registry \
+        --name rag-registry-secret \
+        --server "private.$TZ_ICR" \
+        --username iamapikey \
+        --password "$TZ_API_KEY"
+else
+    echo 'Registry secret already exists'
+fi
+
+echo '-----------------------------------------------------------'
+echo 'Creating/Updating A2A Agent Application'
+echo '-----------------------------------------------------------'
+
+# Check if application exists
+if [[ $(ibmcloud ce application get -n rag-a2a-agent 2>&1 | grep 'Resource not found') ]]; then
+    echo 'Creating IBM Code Engine Application: rag-a2a-agent'
+    ibmcloud ce application create \
+        --name rag-a2a-agent \
+        --port 8001 \
+        --min-scale 1 --max-scale 3 \
+        --cpu 1 --memory 2G \
+        --image "private.$FULL_IMAGE_TAG" \
+        --registry-secret rag-registry-secret \
+        --env WATSONX_API_KEY="$WATSONX_API_KEY" \
+        --env WATSONX_PROJECT_ID="$WATSONX_PROJECT_ID" \
+        --env WATSONX_URL="$WATSONX_URL" \
+        --env MCP_SERVER_HOST="${MCP_SERVER_HOST:-rag-mcp-server}" \
+        --env MCP_SERVER_PORT="${MCP_SERVER_PORT:-8000}" \
+        --env A2A_AGENT_ID="${A2A_AGENT_ID:-rag-agent}" \
+        --env A2A_AGENT_NAME="${A2A_AGENT_NAME:-RAG Knowledge Agent}" \
+        --env A2A_AGENT_DESCRIPTION="${A2A_AGENT_DESCRIPTION:-Agent for querying RAG knowledge base}" \
+        --env EMBEDDING_MODEL="${EMBEDDING_MODEL:-ibm/slate-125m-english-rtrvr}" \
+        --env EMBEDDING_DIMENSION="${EMBEDDING_DIMENSION:-384}" \
+        --env LLM_MODEL="${LLM_MODEL:-ibm/granite-13b-chat-v2}" \
+        --env RAG_TOP_K="${RAG_TOP_K:-5}" \
+        --env RAG_SCORE_THRESHOLD="${RAG_SCORE_THRESHOLD:-0.7}" \
+        --env LOG_LEVEL="${LOG_LEVEL:-INFO}" \
+        --env LOG_FORMAT="${LOG_FORMAT:-json}"
+else
+    echo 'Updating IBM Code Engine Application: rag-a2a-agent'
+    ibmcloud ce application update \
+        --name rag-a2a-agent \
+        --image "private.$FULL_IMAGE_TAG" \
+        --registry-secret rag-registry-secret
+fi
+
+echo '-----------------------------------------------------------'
+echo 'Deployment Complete'
+echo '-----------------------------------------------------------'
+
+# Get application URL
+APP_URL=$(ibmcloud ce application get -n rag-a2a-agent -o json | grep -o '"url":"[^"]*' | cut -d'"' -f4)
+echo "A2A Agent URL: $APP_URL"
+
+echo '-----------------------------------------------------------'
+echo 'Deployment successful!'
+echo '-----------------------------------------------------------'
+
+# Made with Bob
