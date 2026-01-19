@@ -65,4 +65,6 @@ data/documents/*.docx
 
 # OS
 Thumbs.db
-.DS_Store
+.DS_Store-e 
+# Log files
+logs/

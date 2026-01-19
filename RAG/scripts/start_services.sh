@@ -23,6 +23,7 @@ echo ""
 
 # Start MCP Server
 echo "2. Starting MCP Server..."
+mkdir -p logs
 source venv/bin/activate
 pkill -f "uvicorn mcp_server.server:app" 2>/dev/null || true
 sleep 2
