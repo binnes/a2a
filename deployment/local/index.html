@@ -18,7 +18,7 @@
         <link rel="prev" href="../../rag/troubleshooting/">
       
       
-        <link rel="next" href="../ibm-code-engine/">
+        <link rel="next" href="../orchestrate/">
       
       
         
@@ -1079,6 +1079,78 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#ibm-watsonx-orchestrate-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IBM watsonx Orchestrate Integration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="IBM watsonx Orchestrate Integration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prerequisites_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setup-orchestrate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup Orchestrate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verify-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verify Integration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration Options
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#orchestrate-benefits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Orchestrate Benefits
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#testing-the-deployment" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1399,6 +1471,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../orchestrate/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IBM watsonx Orchestrate
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../ibm-code-engine/" class="md-nav__link">
         
   
@@ -1572,6 +1672,78 @@
       
     </span>
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ibm-watsonx-orchestrate-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IBM watsonx Orchestrate Integration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="IBM watsonx Orchestrate Integration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prerequisites_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setup-orchestrate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup Orchestrate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verify-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verify Integration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration Options
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#orchestrate-benefits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Orchestrate Benefits
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2104,24 +2276,94 @@
 </tr>
 </tbody>
 </table>
+<h2 id="ibm-watsonx-orchestrate-integration">IBM watsonx Orchestrate Integration</h2>
+<p>Once the RAG agent is deployed locally, you can integrate it with IBM watsonx Orchestrate Developer Edition for enterprise-grade orchestration and workflow management.</p>
+<h3 id="prerequisites_1">Prerequisites</h3>
+<ol>
+<li><strong>Orchestrate Developer Edition</strong>: Download and install from <a href="https://developer.watson-orchestrate.ibm.com">IBM Developer</a></li>
+<li><strong>Entitlement Key</strong>: Obtain from IBM Marketplace (wxo/myibm)</li>
+<li><strong>Running RAG Agent</strong>: Ensure the A2A agent is running on http://localhost:8001</li>
+</ol>
+<h3 id="setup-orchestrate">Setup Orchestrate</h3>
+<ol>
+<li>
+<p><strong>Configure Environment</strong>:
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nb">cd</span><span class="w"> </span>orchestrate
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>cp<span class="w"> </span>.env.example<span class="w"> </span>.env
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="c1"># Edit .env with your credentials</span>
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Start Orchestrate</strong>:
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nb">cd</span><span class="w"> </span>orchestrate
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>bash<span class="w"> </span>scripts/startOrchestrate.sh
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Create and Import Shakespeare Agent</strong>:
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># Activate virtual environment</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="c1"># Create and import Shakespeare knowledge agent</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>orchestrate<span class="w"> </span>agents<span class="w"> </span>create<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">  </span>-n<span class="w"> </span>shakespeare-rag-agent<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">  </span>-t<span class="w"> </span><span class="s2">&quot;Shakespeare Knowledge Agent&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">  </span>-k<span class="w"> </span>external<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">  </span>--description<span class="w"> </span><span class="s2">&quot;RAG agent with complete works of Shakespeare. Use for questions about Shakespeare&#39;s plays, sonnets, characters, quotes, and literary analysis.&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">  </span>--api<span class="w"> </span>http://127.0.0.1:8001<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="w">  </span>--provider<span class="w"> </span>external_chat/A2A/0.3.0<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="w">  </span>-o<span class="w"> </span>rag-agent-config.yml
+</code></pre></div></p>
+</li>
+</ol>
+<p><strong>Note</strong>: Use <code>127.0.0.1</code> instead of <code>localhost</code> to avoid IPv6 connection issues.</p>
+<p><strong>Knowledge Base</strong>: This agent contains the complete works of William Shakespeare and is ideal for literary questions, character analysis, and quote identification.</p>
+<h3 id="verify-integration">Verify Integration</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># List imported agents</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>orchestrate<span class="w"> </span>agents<span class="w"> </span>list
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="c1"># Test agent health</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>curl<span class="w"> </span>http://localhost:8001/health
+</code></pre></div>
+<h3 id="configuration-options">Configuration Options</h3>
+<p>The RAG agent configuration supports:</p>
+<ul>
+<li><strong>A2A Protocol</strong>: Full Agent-to-Agent communication</li>
+<li><strong>Capabilities</strong>: rag_query, knowledge_search, document_qa</li>
+<li><strong>Resource Limits</strong>: CPU and memory constraints</li>
+<li><strong>Retry Policies</strong>: Exponential backoff with configurable limits</li>
+<li><strong>Health Monitoring</strong>: Automatic health checks and recovery</li>
+</ul>
+<p>For detailed configuration options, see:
+- <a href="orchestrate/rag-agent-config.yml">Orchestrate Configuration</a>
+- <a href="https://developer.watson-orchestrate.ibm.com">IBM watsonx Orchestrate Documentation</a></p>
+<h3 id="orchestrate-benefits">Orchestrate Benefits</h3>
+<p>Integrating with Orchestrate provides:</p>
+<ul>
+<li><strong>Workflow Orchestration</strong>: Coordinate multiple agents and services</li>
+<li><strong>Enterprise Security</strong>: OAuth 2.0, RBAC, audit logging</li>
+<li><strong>Scalability</strong>: Dynamic scaling based on workload</li>
+<li><strong>Monitoring</strong>: Comprehensive metrics and alerting</li>
+<li><strong>Integration</strong>: Connect to 100+ enterprise systems</li>
+</ul>
 <h2 id="testing-the-deployment">Testing the Deployment</h2>
 <h3 id="health-checks">Health Checks</h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># MCP Server</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>curl<span class="w"> </span>http://localhost:8000/health
-<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
-<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="c1"># A2A Agent</span>
-<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>curl<span class="w"> </span>http://localhost:8001/health
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># MCP Server</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>curl<span class="w"> </span>http://localhost:8000/health
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="c1"># A2A Agent</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>curl<span class="w"> </span>http://localhost:8001/health
 </code></pre></div>
 <h3 id="query-shakespeare">Query Shakespeare</h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># Simple query</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/tools/rag_query<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
-<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="s1">    &quot;query&quot;: &quot;What did Hamlet say about being?&quot;</span>
-<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="s1">  }&#39;</span>
-<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>
-<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="c1"># Get collection stats</span>
-<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/tools/rag_stats
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># Simple query</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/tools/rag_query<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="s1">    &quot;query&quot;: &quot;What did Hamlet say about being?&quot;</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="s1">  }&#39;</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="c1"># Get collection stats</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/tools/rag_stats
 </code></pre></div>
 <h3 id="access-minio-console">Access MinIO Console</h3>
 <ol>
@@ -2132,42 +2374,42 @@
 </ol>
 <h2 id="management">Management</h2>
 <h3 id="view-logs">View Logs</h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># All services</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>podman-compose<span class="w"> </span>logs<span class="w"> </span>-f
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
-<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="c1"># Specific service</span>
-<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>podman-compose<span class="w"> </span>logs<span class="w"> </span>-f<span class="w"> </span>mcp-server
-<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>podman-compose<span class="w"> </span>logs<span class="w"> </span>-f<span class="w"> </span>a2a-agent
-<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>podman-compose<span class="w"> </span>logs<span class="w"> </span>-f<span class="w"> </span>milvus
-<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>podman-compose<span class="w"> </span>logs<span class="w"> </span>-f<span class="w"> </span>data-loader
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># All services</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>podman-compose<span class="w"> </span>logs<span class="w"> </span>-f
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="c1"># Specific service</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>podman-compose<span class="w"> </span>logs<span class="w"> </span>-f<span class="w"> </span>mcp-server
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>podman-compose<span class="w"> </span>logs<span class="w"> </span>-f<span class="w"> </span>a2a-agent
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>podman-compose<span class="w"> </span>logs<span class="w"> </span>-f<span class="w"> </span>milvus
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>podman-compose<span class="w"> </span>logs<span class="w"> </span>-f<span class="w"> </span>data-loader
 </code></pre></div>
 <h3 id="check-status">Check Status</h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># List running containers</span>
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>podman-compose<span class="w"> </span>ps
-<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
-<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="c1"># Detailed container info</span>
-<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>podman<span class="w"> </span>ps<span class="w"> </span>-a
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1"># List running containers</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>podman-compose<span class="w"> </span>ps
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="c1"># Detailed container info</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>podman<span class="w"> </span>ps<span class="w"> </span>-a
 </code></pre></div>
 <h3 id="stop-services">Stop Services</h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># Stop all services</span>
-<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>podman-compose<span class="w"> </span>down
-<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
-<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="c1"># Stop and remove volumes (clears data)</span>
-<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>podman-compose<span class="w"> </span>down<span class="w"> </span>-v
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1"># Stop all services</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>podman-compose<span class="w"> </span>down
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="c1"># Stop and remove volumes (clears data)</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>podman-compose<span class="w"> </span>down<span class="w"> </span>-v
 </code></pre></div>
 <h3 id="restart-services">Restart Services</h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># Restart all</span>
-<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>podman-compose<span class="w"> </span>restart
-<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
-<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="c1"># Restart specific service</span>
-<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>podman-compose<span class="w"> </span>restart<span class="w"> </span>mcp-server
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1"># Restart all</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>podman-compose<span class="w"> </span>restart
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="c1"># Restart specific service</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>podman-compose<span class="w"> </span>restart<span class="w"> </span>mcp-server
 </code></pre></div>
 <h3 id="rebuild-after-changes">Rebuild After Changes</h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># Rebuild specific service</span>
-<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>podman-compose<span class="w"> </span>up<span class="w"> </span>-d<span class="w"> </span>--build<span class="w"> </span>mcp-server
-<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
-<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="c1"># Rebuild all services</span>
-<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>podman-compose<span class="w"> </span>up<span class="w"> </span>-d<span class="w"> </span>--build
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c1"># Rebuild specific service</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>podman-compose<span class="w"> </span>up<span class="w"> </span>-d<span class="w"> </span>--build<span class="w"> </span>mcp-server
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="c1"># Rebuild all services</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>podman-compose<span class="w"> </span>up<span class="w"> </span>-d<span class="w"> </span>--build
 </code></pre></div>
 <h2 id="data-persistence">Data Persistence</h2>
 <p>Data is stored in Podman volumes:</p>
@@ -2177,58 +2419,58 @@
 <li><code>milvus_data</code> - Vector database</li>
 </ul>
 <p>To clear all data:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>podman-compose<span class="w"> </span>down<span class="w"> </span>-v
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>podman-compose<span class="w"> </span>down<span class="w"> </span>-v
 </code></pre></div>
 <h2 id="troubleshooting">Troubleshooting</h2>
 <h3 id="milvus-wont-start">Milvus Won't Start</h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1"># Check logs</span>
-<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>podman-compose<span class="w"> </span>logs<span class="w"> </span>milvus
-<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>
-<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="c1"># Check dependencies</span>
-<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>podman-compose<span class="w"> </span>ps
-<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>
-<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="c1"># Restart with fresh volumes</span>
-<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>podman-compose<span class="w"> </span>down<span class="w"> </span>-v
-<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>podman-compose<span class="w"> </span>up<span class="w"> </span>-d<span class="w"> </span>milvus
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="c1"># Check logs</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>podman-compose<span class="w"> </span>logs<span class="w"> </span>milvus
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="c1"># Check dependencies</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>podman-compose<span class="w"> </span>ps
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="c1"># Restart with fresh volumes</span>
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>podman-compose<span class="w"> </span>down<span class="w"> </span>-v
+<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a>podman-compose<span class="w"> </span>up<span class="w"> </span>-d<span class="w"> </span>milvus
 </code></pre></div>
 <h3 id="port-already-in-use">Port Already in Use</h3>
 <p>Edit <code>podman-compose.yml</code> to change port mappings:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nt">services</span><span class="p">:</span>
-<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">  </span><span class="nt">mcp-server</span><span class="p">:</span>
-<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
-<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;8080:8000&quot;</span><span class="w">  </span><span class="c1"># Change 8000 to 8080</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="nt">services</span><span class="p">:</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="w">  </span><span class="nt">mcp-server</span><span class="p">:</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;8080:8000&quot;</span><span class="w">  </span><span class="c1"># Change 8000 to 8080</span>
 </code></pre></div>
 <h3 id="data-loader-fails">Data Loader Fails</h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c1"># View logs</span>
-<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>podman-compose<span class="w"> </span>logs<span class="w"> </span>data-loader
-<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>
-<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="c1"># Check Shakespeare file</span>
-<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>ls<span class="w"> </span>-la<span class="w"> </span>../../data/reference/
-<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>
-<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="c1"># Run manually</span>
-<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>podman-compose<span class="w"> </span>up<span class="w"> </span>data-loader
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="c1"># View logs</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>podman-compose<span class="w"> </span>logs<span class="w"> </span>data-loader
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="c1"># Check Shakespeare file</span>
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>ls<span class="w"> </span>-la<span class="w"> </span>../../data/reference/
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>
+<a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="c1"># Run manually</span>
+<a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a>podman-compose<span class="w"> </span>up<span class="w"> </span>data-loader
 </code></pre></div>
 <h3 id="connection-issues">Connection Issues</h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="c1"># Test Milvus from MCP Server</span>
-<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>podman<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>rag-mcp-server<span class="w"> </span>curl<span class="w"> </span>http://milvus:9091/healthz
-<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>
-<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="c1"># Check environment</span>
-<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>podman<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>rag-mcp-server<span class="w"> </span>env<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>MILVUS
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="c1"># Test Milvus from MCP Server</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>podman<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>rag-mcp-server<span class="w"> </span>curl<span class="w"> </span>http://milvus:9091/healthz
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="c1"># Check environment</span>
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>podman<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>rag-mcp-server<span class="w"> </span>env<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>MILVUS
 </code></pre></div>
 <h2 id="development-workflow">Development Workflow</h2>
 <h3 id="access-container-shell">Access Container Shell</h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="c1"># MCP Server</span>
-<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>podman<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>rag-mcp-server<span class="w"> </span>/bin/bash
-<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>
-<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="c1"># A2A Agent</span>
-<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>podman<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>rag-a2a-agent<span class="w"> </span>/bin/bash
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="c1"># MCP Server</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>podman<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>rag-mcp-server<span class="w"> </span>/bin/bash
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="c1"># A2A Agent</span>
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>podman<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>rag-a2a-agent<span class="w"> </span>/bin/bash
 </code></pre></div>
 <h3 id="monitor-resources">Monitor Resources</h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="c1"># Real-time stats</span>
-<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>podman<span class="w"> </span>stats
-<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>
-<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="c1"># Inspect container</span>
-<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>podman<span class="w"> </span>inspect<span class="w"> </span>rag-mcp-server
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="c1"># Real-time stats</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>podman<span class="w"> </span>stats
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="c1"># Inspect container</span>
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>podman<span class="w"> </span>inspect<span class="w"> </span>rag-mcp-server
 </code></pre></div>
 <h3 id="update-code">Update Code</h3>
 <ol>
@@ -2239,19 +2481,19 @@
 <h2 id="performance-tuning">Performance Tuning</h2>
 <h3 id="resource-limits">Resource Limits</h3>
 <p>Edit <code>podman-compose.yml</code> to adjust resources:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="nt">services</span><span class="p">:</span>
-<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="w">  </span><span class="nt">milvus</span><span class="p">:</span>
-<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="w">    </span><span class="nt">deploy</span><span class="p">:</span>
-<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="w">      </span><span class="nt">resources</span><span class="p">:</span>
-<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="w">        </span><span class="nt">limits</span><span class="p">:</span>
-<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="w">          </span><span class="nt">cpus</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;2&#39;</span>
-<a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4G</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="nt">services</span><span class="p">:</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="w">  </span><span class="nt">milvus</span><span class="p">:</span>
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="w">    </span><span class="nt">deploy</span><span class="p">:</span>
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="w">      </span><span class="nt">resources</span><span class="p">:</span>
+<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a><span class="w">        </span><span class="nt">limits</span><span class="p">:</span>
+<a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a><span class="w">          </span><span class="nt">cpus</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;2&#39;</span>
+<a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a><span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4G</span>
 </code></pre></div>
 <h3 id="milvus-configuration">Milvus Configuration</h3>
 <p>Adjust Milvus settings in <code>podman-compose.yml</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="nt">environment</span><span class="p">:</span>
-<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ETCD_AUTO_COMPACTION_RETENTION=1000</span>
-<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ETCD_QUOTA_BACKEND_BYTES=4294967296</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="nt">environment</span><span class="p">:</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ETCD_AUTO_COMPACTION_RETENTION=1000</span>
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ETCD_QUOTA_BACKEND_BYTES=4294967296</span>
 </code></pre></div>
 <h2 id="next-steps">Next Steps</h2>
 <ul>
