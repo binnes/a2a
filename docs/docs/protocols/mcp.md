@@ -261,7 +261,7 @@ response = mcp.complete(
 # Use IBM Watson
 response = mcp.complete(
     provider='ibm-watson',
-    model='granite-13b',
+    model='gpt-oss-120b',
     messages=messages
 )
 ```

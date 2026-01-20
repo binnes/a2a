@@ -2,264 +2,350 @@
 
 ## Overview
 
-The **Agent-to-Agent Protocol (A2A)** enables seamless communication and collaboration between autonomous agents within the IBM Orchestrate platform. A2A provides a standardized messaging framework that allows agents to discover each other, exchange information, coordinate tasks, and work together to accomplish complex goals.
+The **Agent-to-Agent Protocol (A2A)** enables seamless communication and collaboration between autonomous agents within the IBM watsonx Orchestrate platform. This implementation uses the official **A2A 0.3.0 specification** with the `a2a-server` framework to provide standards-compliant agent integration.
 
 ## Purpose
 
 A2A solves critical challenges in multi-agent systems:
 
-- **Agent Discovery**: Find and connect with other agents dynamically
-- **Message Routing**: Efficiently route messages between agents
-- **Coordination**: Synchronize activities across multiple agents
-- **Reliability**: Ensure message delivery with acknowledgments and retries
-- **Security**: Authenticate and authorize inter-agent communication
+- **Standardized Communication**: JSON-RPC 2.0 based messaging protocol
+- **Agent Discovery**: Agents expose capabilities via agent cards
+- **Task Management**: Structured task lifecycle with state tracking
+- **Streaming Updates**: Real-time progress updates during task execution
+- **IBM Orchestrate Integration**: Native integration with watsonx Orchestrate
 
 ## Architecture
 
 ```mermaid
 graph TB
-    subgraph "Agent Layer"
-        A1[Agent 1]
-        A2[Agent 2]
-        A3[Agent 3]
-        A4[Agent 4]
+    subgraph "IBM watsonx Orchestrate"
+        WO[Orchestrate Platform]
+        UI[User Interface]
     end
     
-    subgraph "A2A Protocol Layer"
-        A2A[A2A Interface]
-        MB[Message Bus]
-        AR[Agent Registry]
-        MR[Message Router]
-        QM[Queue Manager]
+    subgraph "A2A Agent Server"
+        AC[Agent Card<br/>.well-known/agent-card.json]
+        RH[Request Handler<br/>DefaultRequestHandler]
+        AE[Agent Executor<br/>ShakespeareAgentExecutor]
+        TS[Task Store<br/>InMemoryTaskStore]
+        EQ[Event Queue<br/>Streaming Updates]
     end
     
-    subgraph "Infrastructure"
-        QUEUE[(Message Queue)]
-        CACHE[(Cache)]
-        DB[(Registry DB)]
+    subgraph "RAG Agent Core"
+        AG[A2A RAG Agent<br/>LangGraph Workflow]
+        MCP[MCP Tool Client<br/>HTTP Client]
     end
     
-    subgraph "IBM Orchestrate"
-        OE[Orchestration Engine]
-        EM[Event Manager]
+    subgraph "Backend Services"
+        MCPS[MCP Server<br/>FastAPI]
+        MILVUS[Milvus<br/>Vector DB]
+        WX[Watsonx.ai<br/>LLM + Embeddings]
     end
     
-    A1 --> A2A
-    A2 --> A2A
-    A3 --> A2A
-    A4 --> A2A
+    UI --> WO
+    WO -->|JSON-RPC 2.0| AC
+    AC --> RH
+    RH --> AE
+    AE --> AG
+    AE --> TS
+    AE --> EQ
+    EQ -->|Push Updates| WO
     
-    A2A --> MB
-    A2A --> AR
-    A2A --> MR
+    AG --> MCP
+    MCP -->|HTTP/REST| MCPS
+    MCPS --> MILVUS
+    MCPS --> WX
     
-    MB --> QM
-    MR --> MB
-    AR --> DB
-    
-    QM --> QUEUE
-    MB --> CACHE
-    
-    A2A --> OE
-    OE --> EM
-    
-    style A2A fill:#ff832b
-    style MB fill:#ff832b
-    style AR fill:#ff832b
+    style AC fill:#0f62fe
+    style RH fill:#0f62fe
+    style AE fill:#0f62fe
+    style AG fill:#ff832b
+    style MCP fill:#ff832b
 ```
 
 ## Core Components
 
-### 1. Agent Registry
+### 1. Agent Card
 
-Maintains a directory of all active agents:
+The agent card describes the agent's capabilities and is served at `/.well-known/agent-card.json`:
 
 ```python
-from a2a import A2AClient
+from a2a.types import AgentCard, AgentCapabilities, AgentSkill
 
-# Initialize A2A client
-a2a = A2AClient(
-    agent_id='customer-service-agent',
-    orchestrate_endpoint=os.getenv('ORCHESTRATE_ENDPOINT')
-)
-
-# Register agent
-a2a.register(
-    capabilities=['chat', 'email', 'ticket-management'],
-    metadata={
-        'version': '1.0.0',
-        'max_concurrent_tasks': 10,
-        'specialization': 'customer-support'
-    }
-)
-
-# Discover agents
-agents = a2a.discover(
-    capability='data-analysis',
-    filters={'specialization': 'financial'}
-)
+def create_agent_card(settings: Settings, host: str, port: int) -> AgentCard:
+    """Create the agent card describing agent capabilities."""
+    capabilities = AgentCapabilities(
+        streaming=False,
+        push_notifications=False,
+    )
+    
+    skill = AgentSkill(
+        id='shakespeare_knowledge',
+        name='Shakespeare Knowledge Base',
+        description='Search and answer questions about Shakespeare\'s complete works',
+        tags=['shakespeare', 'literature', 'plays', 'sonnets'],
+        examples=[
+            'Who is Hamlet?',
+            'What are the main characters in Othello?',
+            'Tell me about Romeo and Juliet',
+        ],
+    )
+    
+    agent_card = AgentCard(
+        name=settings.a2a_agent_name,
+        description=settings.a2a_agent_description,
+        url=f'http://{host}:{port}/',
+        version='1.0.0',
+        default_input_modes=['text', 'text/plain'],
+        default_output_modes=['text', 'text/plain'],
+        capabilities=capabilities,
+        skills=[skill],
+    )
+    
+    return agent_card
 ```
 
-### 2. Message Bus
+### 2. Agent Executor
 
-Handles message routing and delivery:
+The executor handles incoming requests and manages task execution:
 
 ```python
-# Send direct message
-a2a.send_message(
-    to='data-analysis-agent',
-    message={
-        'type': 'request',
-        'action': 'analyze_data',
-        'payload': {
-            'dataset': 'sales-2026-q1.csv',
-            'analysis_type': 'trend'
+from a2a.server.agent_execution import AgentExecutor, RequestContext
+from a2a.server.events import EventQueue
+from a2a.server.tasks import TaskUpdater
+from a2a.types import TaskState
+
+class ShakespeareAgentExecutor(AgentExecutor):
+    """Shakespeare RAG Agent Executor for A2A Protocol."""
+    
+    def __init__(self):
+        """Initialize the executor with the RAG agent."""
+        settings = Settings()
+        self.agent = A2ARAGAgent(settings)
+    
+    async def execute(
+        self,
+        context: RequestContext,
+        event_queue: EventQueue,
+    ) -> None:
+        """Execute a query against the Shakespeare knowledge base."""
+        # Extract query from user input
+        query = context.get_user_input()
+        
+        # Get or create task
+        task = context.current_task
+        if not task:
+            task = new_task(context.message)
+            await event_queue.enqueue_event(task)
+        
+        updater = TaskUpdater(event_queue, task.id, task.context_id)
+        
+        # Update status to working
+        await updater.update_status(
+            TaskState.working,
+            new_agent_text_message(
+                "Searching Shakespeare's works...",
+                task.context_id,
+                task.id,
+            ),
+        )
+        
+        # Process query through RAG agent
+        result = await self.agent.process_query(query)
+        
+        # Add artifact with the answer
+        await updater.add_artifact(
+            [Part(root=TextPart(text=result['response']))],
+            name="shakespeare_answer",
+        )
+        
+        # Mark task as complete
+        await updater.complete()
+```
+
+### 3. LangGraph Workflow
+
+The RAG agent uses LangGraph for workflow orchestration:
+
+```python
+from langgraph.graph import StateGraph, END
+from agent.state import AgentState
+
+class A2ARAGAgent:
+    """A2A-based RAG agent using LangGraph for orchestration."""
+    
+    def _build_graph(self) -> StateGraph:
+        """Build the LangGraph workflow."""
+        workflow = StateGraph(AgentState)
+        
+        # Add nodes
+        workflow.add_node("process_input", self._process_input)
+        workflow.add_node("retrieve_context", self._retrieve_context)
+        workflow.add_node("generate_response", self._generate_response)
+        workflow.add_node("handle_error", self._handle_error)
+        
+        # Set entry point
+        workflow.set_entry_point("process_input")
+        
+        # Add conditional edges
+        workflow.add_conditional_edges(
+            "process_input",
+            self._route_after_input,
+            {"retrieve": "retrieve_context", "error": "handle_error"},
+        )
+        
+        workflow.add_conditional_edges(
+            "retrieve_context",
+            self._route_after_retrieval,
+            {"generate": "generate_response", "error": "handle_error"},
+        )
+        
+        workflow.add_edge("generate_response", END)
+        workflow.add_edge("handle_error", END)
+        
+        return workflow.compile()
+```
+
+### 4. MCP Tool Client
+
+The agent communicates with the MCP server for RAG operations:
+
+```python
+import httpx
+from config.settings import Settings
+
+class MCPToolClient:
+    """Client for calling MCP RAG tools."""
+    
+    def __init__(self, settings: Settings):
+        """Initialize MCP tool client."""
+        self.settings = settings
+        self.base_url = settings.get_mcp_server_url()
+        self.client = httpx.AsyncClient(
+            timeout=30.0,
+            http2=False,
+            follow_redirects=True,
+        )
+    
+    async def rag_query(
+        self,
+        query: str,
+        top_k: Optional[int] = None,
+        include_sources: bool = True,
+    ) -> Dict[str, Any]:
+        """Call the rag_query MCP tool."""
+        response = await self.client.post(
+            f"{self.base_url}/tools/rag_query",
+            json={
+                "query": query,
+                "top_k": top_k,
+                "include_sources": include_sources,
+            },
+        )
+        response.raise_for_status()
+        return response.json()
+```
+
+## Protocol Specification (A2A 0.3.0)
+
+### JSON-RPC 2.0 Request Format
+
+All A2A communication uses JSON-RPC 2.0 over HTTP POST:
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": "req-123",
+  "method": "agent/execute",
+  "params": {
+    "message": {
+      "role": "user",
+      "parts": [
+        {
+          "text": "Who is Hamlet?"
         }
+      ]
     },
-    priority='high',
-    timeout=30000
-)
-
-# Broadcast message
-a2a.broadcast(
-    message={
-        'type': 'notification',
-        'event': 'system_maintenance',
-        'scheduled_at': '2026-01-20T00:00:00Z'
-    },
-    filters={'capability': 'monitoring'}
-)
-```
-
-### 3. Message Router
-
-Intelligently routes messages based on agent capabilities:
-
-```python
-# Route to best available agent
-response = a2a.route_request(
-    capability='translation',
-    message={
-        'text': 'Hello, world!',
-        'source_lang': 'en',
-        'target_lang': 'fr'
-    },
-    routing_strategy='least-loaded'
-)
-```
-
-### 4. Queue Manager
-
-Manages message queues for reliable delivery:
-
-```python
-# Subscribe to queue
-a2a.subscribe(
-    queue='customer-inquiries',
-    handler=handle_inquiry,
-    max_concurrent=5
-)
-
-# Publish to queue
-a2a.publish(
-    queue='customer-inquiries',
-    message={
-        'inquiry_id': 'inq-12345',
-        'customer_id': 'cust-67890',
-        'message': 'I need help with my order'
-    }
-)
-```
-
-## Protocol Specification
-
-### Message Format
-
-```json
-{
-  "version": "1.0",
-  "message_id": "msg-abc123",
-  "timestamp": "2026-01-15T11:42:00Z",
-  "from": {
-    "agent_id": "customer-service-agent",
-    "instance_id": "inst-001"
-  },
-  "to": {
-    "agent_id": "data-analysis-agent",
-    "instance_id": "inst-002"
-  },
-  "type": "request",
-  "action": "analyze_data",
-  "payload": {
-    "dataset": "sales-2026-q1.csv",
-    "analysis_type": "trend"
-  },
-  "metadata": {
-    "priority": "high",
-    "timeout": 30000,
-    "correlation_id": "corr-xyz789",
-    "reply_to": "customer-service-agent"
+    "context_id": "ctx-456"
   }
 }
 ```
 
-### Response Format
+### Agent Card Format
+
+Served at `/.well-known/agent-card.json`:
 
 ```json
 {
-  "version": "1.0",
-  "message_id": "msg-def456",
-  "timestamp": "2026-01-15T11:42:05Z",
-  "from": {
-    "agent_id": "data-analysis-agent",
-    "instance_id": "inst-002"
+  "name": "Shakespeare Knowledge Agent",
+  "description": "RAG agent with complete works of Shakespeare",
+  "url": "http://localhost:8001/",
+  "version": "1.0.0",
+  "default_input_modes": ["text", "text/plain"],
+  "default_output_modes": ["text", "text/plain"],
+  "capabilities": {
+    "streaming": false,
+    "push_notifications": false
   },
-  "to": {
-    "agent_id": "customer-service-agent",
-    "instance_id": "inst-001"
-  },
-  "type": "response",
-  "status": "success",
-  "payload": {
-    "analysis_results": {
-      "trend": "upward",
-      "growth_rate": 15.3,
-      "confidence": 0.92
+  "skills": [
+    {
+      "id": "shakespeare_knowledge",
+      "name": "Shakespeare Knowledge Base",
+      "description": "Search and answer questions about Shakespeare's complete works",
+      "tags": ["shakespeare", "literature", "plays", "sonnets"],
+      "examples": [
+        "Who is Hamlet?",
+        "What are the main characters in Othello?"
+      ]
     }
-  },
-  "metadata": {
-    "correlation_id": "corr-xyz789",
-    "processing_time_ms": 4850
+  ]
+}
+```
+
+### Task State Updates
+
+The agent sends task state updates via the event queue:
+
+```json
+{
+  "type": "task",
+  "task": {
+    "id": "task-789",
+    "context_id": "ctx-456",
+    "state": "working",
+    "messages": [
+      {
+        "role": "agent",
+        "parts": [
+          {
+            "text": "Searching Shakespeare's works for relevant information..."
+          }
+        ]
+      }
+    ]
   }
 }
 ```
 
-### Error Format
+### Task Completion with Artifacts
 
 ```json
 {
-  "version": "1.0",
-  "message_id": "msg-ghi789",
-  "timestamp": "2026-01-15T11:42:05Z",
-  "from": {
-    "agent_id": "data-analysis-agent",
-    "instance_id": "inst-002"
-  },
-  "to": {
-    "agent_id": "customer-service-agent",
-    "instance_id": "inst-001"
-  },
-  "type": "error",
-  "error": {
-    "code": "INVALID_DATASET",
-    "message": "Dataset not found or inaccessible",
-    "details": {
-      "dataset": "sales-2026-q1.csv",
-      "reason": "file_not_found"
-    }
-  },
-  "metadata": {
-    "correlation_id": "corr-xyz789"
+  "type": "task",
+  "task": {
+    "id": "task-789",
+    "context_id": "ctx-456",
+    "state": "completed",
+    "artifacts": [
+      {
+        "name": "shakespeare_answer",
+        "parts": [
+          {
+            "text": "Hamlet is the Prince of Denmark and the protagonist..."
+          }
+        ]
+      }
+    ]
   }
 }
 ```
@@ -376,215 +462,12 @@ result = a2a.execute_workflow(
 )
 ```
 
-## Features
-
-### 1. Agent Discovery
-
-Dynamic agent discovery based on capabilities:
-
-```python
-# Find agents by capability
-agents = a2a.discover(
-    capability='image-processing',
-    filters={
-        'available': True,
-        'load': {'$lt': 0.8}
-    }
-)
-
-# Get agent details
-agent_info = a2a.get_agent_info('image-processing-agent')
-print(f"Capabilities: {agent_info.capabilities}")
-print(f"Status: {agent_info.status}")
-print(f"Load: {agent_info.current_load}")
-```
-
-### 2. Load Balancing
-
-Distribute work across multiple agent instances:
-
-```python
-# Configure load balancing
-a2a.configure_load_balancing(
-    strategy='round-robin',  # or 'least-loaded', 'random'
-    health_check_interval=5000,
-    max_retries=3
-)
-
-# Send request (automatically load balanced)
-response = a2a.request(
-    to='data-processing-agent',  # Routes to best instance
-    action='process',
-    payload=data
-)
-```
-
-### 3. Message Persistence
-
-Ensure message delivery with persistence:
-
-```python
-# Send persistent message
-a2a.send_persistent(
-    to='critical-agent',
-    message=important_message,
-    ttl=3600000,  # 1 hour
-    retry_policy={
-        'max_attempts': 5,
-        'backoff': 'exponential'
-    }
-)
-```
-
-### 4. Circuit Breaker
-
-Prevent cascading failures:
-
-```python
-# Configure circuit breaker
-a2a.configure_circuit_breaker(
-    agent='external-api-agent',
-    failure_threshold=5,
-    timeout=30000,
-    reset_timeout=60000
-)
-
-# Requests will fail fast if circuit is open
-try:
-    response = a2a.request(to='external-api-agent', ...)
-except CircuitBreakerOpenError:
-    # Use fallback
-    response = fallback_handler()
-```
-
-### 5. Message Tracing
-
-Track messages across agents:
-
-```python
-# Enable tracing
-a2a.enable_tracing(
-    trace_id='trace-123',
-    sample_rate=1.0
-)
-
-# Messages will include trace information
-response = a2a.request(
-    to='agent-b',
-    action='process',
-    payload=data
-)
-
-# View trace
-trace = a2a.get_trace('trace-123')
-for span in trace.spans:
-    print(f"{span.agent_id}: {span.duration_ms}ms")
-```
-
-## Best Practices
-
-### 1. Message Design
-
-- Keep messages small and focused
-- Use correlation IDs for request tracking
-- Include timeout values for time-sensitive operations
-- Validate message payloads
-
-### 2. Error Handling
-
-```python
-from a2a.exceptions import AgentNotFoundError, TimeoutError
-
-try:
-    response = a2a.request(to='agent-x', ...)
-except AgentNotFoundError:
-    # Agent not available, use fallback
-    response = fallback_agent.process(...)
-except TimeoutError:
-    # Request timed out, retry or fail gracefully
-    logger.warning("Request timed out")
-    response = None
-```
-
-### 3. Resource Management
-
-- Implement backpressure mechanisms
-- Set appropriate queue sizes
-- Monitor agent load and scale accordingly
-- Use circuit breakers for external dependencies
-
-### 4. Security
-
-```python
-# Authenticate messages
-a2a.configure_security(
-    authentication='jwt',
-    encryption='aes-256',
-    verify_sender=True
-)
-
-# Messages are automatically signed and encrypted
-response = a2a.request(to='secure-agent', ...)
-```
-
-## Integration with IBM Orchestrate
-
-A2A integrates seamlessly with IBM Orchestrate:
-
-```python
-from orchestrate import OrchestratePlatform
-from a2a import A2AClient
-
-# Initialize both
-orchestrate = OrchestratePlatform(...)
-a2a = A2AClient(...)
-
-# Register A2A as communication layer
-orchestrate.register_communication_layer(
-    name='a2a',
-    layer=a2a
-)
-
-# Agents automatically use A2A for communication
-agent = orchestrate.create_agent(
-    name='my-agent',
-    communication='a2a'
-)
-```
-
-## Monitoring and Debugging
-
-### Message Metrics
-
-```python
-# Get message statistics
-stats = a2a.get_statistics(
-    agent_id='my-agent',
-    period='last_hour'
-)
-
-print(f"Messages sent: {stats.messages_sent}")
-print(f"Messages received: {stats.messages_received}")
-print(f"Average latency: {stats.avg_latency_ms}ms")
-print(f"Error rate: {stats.error_rate}%")
-```
-
-### Debug Mode
-
-```python
-# Enable debug logging
-a2a.set_log_level('DEBUG')
-
-# Log all messages
-a2a.enable_message_logging(
-    log_payloads=True,
-    log_metadata=True
-)
-```
-
 ## Resources
 
-- [A2A Specification](https://a2a-protocol.org/)
-- [API Reference](../api/reference.md)
+- [A2A 0.3.0 Specification](https://github.com/IBM/agent-to-agent-protocol)
+- [a2a-server Framework](https://pypi.org/project/a2a-server/)
+- [RAG Agent Implementation](../../RAG/agent/a2a_agent.py)
+- [Agent Executor](../../RAG/agent/agent_executor.py)
 - [MCP Protocol](mcp.md)
-- [Architecture Overview](../architecture/overview.md)
+- [Orchestrate Integration](../architecture/orchestrate.md)
+- [RAG Overview](../rag/overview.md)

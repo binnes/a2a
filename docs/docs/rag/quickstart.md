@@ -150,7 +150,7 @@ Expected response:
     "collection_name": "rag_knowledge_base",
     "num_entities": 156,
     "metric_type": "COSINE",
-    "dimension": 384
+    "dimension": 768
   }
 }
 ```

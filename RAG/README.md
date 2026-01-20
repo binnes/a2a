@@ -52,7 +52,7 @@ User → A2A Agent (LangGraph) → MCP Server (FastAPI) → Watsonx.ai + Milvus
 **Components:**
 - **A2A Agent**: LangGraph-based workflow orchestration
 - **MCP Server**: RESTful API with 9 endpoints
-- **Watsonx.ai**: Embeddings (384-dim) + LLM (Granite)
+- **Watsonx.ai**: Embeddings (768-dim) + LLM (GPT-OSS-120B)
 - **Milvus**: Vector database with COSINE similarity
 
 ## Status

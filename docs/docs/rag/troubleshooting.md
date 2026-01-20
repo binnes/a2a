@@ -188,7 +188,7 @@ cat config/.env | grep WATSONX_PROJECT_ID
 
 **Symptoms**:
 ```
-404 Not Found: Model 'ibm/granite-13b-chat-v2' not found
+404 Not Found: Model 'openai/gpt-oss-120b' not found
 ```
 
 **Solutions**:
@@ -239,7 +239,7 @@ RAG_CHUNK_OVERLAP=20  # Reduced from 40
 3. **Use model with higher limit**:
 ```bash
 # Some models support up to 8192 tokens
-WATSONX_EMBEDDING_MODEL=ibm/slate-125m-english-rtrvr-v2
+WATSONX_EMBEDDING_MODEL=ibm/granite-embedding-278m-multilingual
 ```
 
 ## Document Processing Issues

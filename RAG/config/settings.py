@@ -35,11 +35,11 @@ class Settings(BaseSettings):
 
     # LLM Configuration
     llm_model: str = Field(
-        default="ibm/granite-13b-chat-v2",
+        default="openai/gpt-oss-120b",
         description="LLM model name",
     )
     llm_max_tokens: int = Field(
-        default=2048,
+        default=16384,
         description="Maximum tokens for LLM generation",
     )
     llm_temperature: float = Field(
@@ -66,6 +66,8 @@ class Settings(BaseSettings):
     mcp_server_reload: bool = Field(default=False, description="Enable auto-reload")
 
     # A2A Agent Configuration
+    a2a_host: str = Field(default="0.0.0.0", description="A2A agent server host")
+    a2a_port: int = Field(default=8001, description="A2A agent server port")
     a2a_agent_id: str = Field(default="shakespeare-rag-agent", description="A2A agent ID")
     a2a_agent_name: str = Field(
         default="Shakespeare Knowledge Agent",

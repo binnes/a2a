@@ -1,17 +1,28 @@
-"""A2A Agent FastAPI Server."""
+"""A2A Shakespeare RAG Agent Server.
+
+This server uses the official a2a-server framework to provide a standards-compliant
+A2A 0.3.0 protocol implementation for IBM watsonx Orchestrate integration.
+"""
 
 import logging
-from typing import Dict, Any, Optional
-from datetime import datetime
-from contextlib import asynccontextmanager
+import sys
 
-from fastapi import FastAPI, HTTPException  # type: ignore
-from fastapi.responses import JSONResponse  # type: ignore
-from pydantic import BaseModel, Field  # type: ignore
-import uvicorn  # type: ignore
+import httpx
+import uvicorn
+from a2a.server.apps import A2AStarletteApplication
+from a2a.server.request_handlers import DefaultRequestHandler
+from a2a.server.tasks import (
+    BasePushNotificationSender,
+    InMemoryPushNotificationConfigStore,
+    InMemoryTaskStore,
+)
+from a2a.types import (
+    AgentCapabilities,
+    AgentCard,
+    AgentSkill,
+)
 
-from agent.a2a_agent import A2ARAGAgent
-from agent.state import A2AMessage
+from agent.agent_executor import ShakespeareAgentExecutor
 from config.settings import Settings
 
 # Configure logging
@@ -22,121 +33,107 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-# Request/Response Models
-class A2AMessageRequest(BaseModel):
-    """Request model for A2A messages."""
-    agent_id: str = Field(..., description="Sender agent ID")
-    message_type: str = Field(..., description="Message type")
-    content: Dict[str, Any] = Field(..., description="Message content")
-    correlation_id: Optional[str] = Field(None, description="Correlation ID")
-
-
-class QueryRequest(BaseModel):
-    """Request model for direct queries."""
-    query: str = Field(..., description="User query string")
-
-
-# Global agent instance
-agent_instance: Optional[A2ARAGAgent] = None
-
-
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    """Manage application lifespan."""
-    global agent_instance
+def create_agent_card(settings: Settings, host: str, port: int) -> AgentCard:
+    """Create the agent card describing Shakespeare RAG agent capabilities.
     
-    # Startup
-    settings = Settings()
-    agent_instance = A2ARAGAgent(settings)
-    logger.info(f"A2A Agent {agent_instance.agent_id} started")
-    
-    yield
-    
-    # Shutdown
-    if agent_instance:
-        await agent_instance.close()
-        logger.info("A2A Agent stopped")
-
-
-# Create FastAPI app
-app = FastAPI(
-    title="A2A RAG Agent",
-    description="Agent-to-Agent RAG service",
-    version="0.1.0",
-    lifespan=lifespan,
-)
-
-
-@app.get("/health")
-async def health_check():
-    """Health check endpoint."""
-    if not agent_instance:
-        raise HTTPException(status_code=503, detail="Agent not initialized")
-    
-    health = await agent_instance.health_check()
-    return JSONResponse(content=health)
-
-
-@app.get("/capabilities")
-async def get_capabilities():
-    """Get agent capabilities."""
-    if not agent_instance:
-        raise HTTPException(status_code=503, detail="Agent not initialized")
-    
-    return JSONResponse(content=agent_instance.get_capabilities())
-
-
-@app.post("/a2a/message")
-async def handle_message(request: A2AMessageRequest):
-    """Handle incoming A2A message."""
-    if not agent_instance:
-        raise HTTPException(status_code=503, detail="Agent not initialized")
-    
-    try:
-        message: A2AMessage = {
-            "agent_id": request.agent_id,
-            "message_type": request.message_type,
-            "content": request.content,
-            "timestamp": datetime.utcnow().isoformat(),
-            "correlation_id": request.correlation_id,
-        }
+    Args:
+        settings: Application settings
+        host: Server host
+        port: Server port
         
-        response = await agent_instance.handle_a2a_message(message)
-        return JSONResponse(content=response)
+    Returns:
+        AgentCard with agent metadata and capabilities
+    """
+    capabilities = AgentCapabilities(
+        streaming=False,  # We don't support streaming yet
+        push_notifications=False,
+    )
     
-    except Exception as e:
-        logger.error(f"Error handling A2A message: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
+    skill = AgentSkill(
+        id='shakespeare_knowledge',
+        name='Shakespeare Knowledge Base',
+        description='Search and answer questions about Shakespeare\'s complete works',
+        tags=[
+            'shakespeare',
+            'literature',
+            'plays',
+            'sonnets',
+            'poetry',
+            'drama',
+            'elizabethan',
+        ],
+        examples=[
+            'Who is Hamlet?',
+            'What are the main characters in Othello?',
+            'Tell me about Romeo and Juliet',
+            'What happens in Macbeth?',
+            'Who wrote "To be or not to be"?',
+        ],
+    )
+    
+    agent_card = AgentCard(
+        name=settings.a2a_agent_name,
+        description=settings.a2a_agent_description,
+        url=f'http://{host}:{port}/',
+        version='1.0.0',
+        default_input_modes=['text', 'text/plain'],
+        default_output_modes=['text', 'text/plain'],
+        capabilities=capabilities,
+        skills=[skill],
+    )
+    
+    return agent_card
 
 
-@app.post("/query")
-async def process_query(request: QueryRequest):
-    """Process a direct query (non-A2A)."""
-    if not agent_instance:
-        raise HTTPException(status_code=503, detail="Agent not initialized")
-    
+def main():
+    """Start the Shakespeare RAG Agent server."""
     try:
-        result = await agent_instance.process_query(request.query)
-        return JSONResponse(content=result)
-    
+        # Load settings
+        settings = Settings()
+        
+        # Server configuration
+        host = settings.a2a_host
+        port = settings.a2a_port
+        
+        logger.info(f"Starting Shakespeare RAG Agent on {host}:{port}")
+        logger.info(f"Agent ID: {settings.a2a_agent_id}")
+        logger.info(f"Agent Name: {settings.a2a_agent_name}")
+        
+        # Create agent card
+        agent_card = create_agent_card(settings, host, port)
+        
+        # Set up A2A server components
+        httpx_client = httpx.AsyncClient()
+        push_config_store = InMemoryPushNotificationConfigStore()
+        push_sender = BasePushNotificationSender(
+            httpx_client=httpx_client,
+            config_store=push_config_store,
+        )
+        
+        # Create request handler with our agent executor
+        request_handler = DefaultRequestHandler(
+            agent_executor=ShakespeareAgentExecutor(),
+            task_store=InMemoryTaskStore(),
+            push_config_store=push_config_store,
+            push_sender=push_sender,
+        )
+        
+        # Create A2A Starlette application
+        server = A2AStarletteApplication(
+            agent_card=agent_card,
+            http_handler=request_handler,
+        )
+        
+        # Start server
+        logger.info("Server initialized successfully")
+        uvicorn.run(server.build(), host=host, port=port)
+        
     except Exception as e:
-        logger.error(f"Error processing query: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
+        logger.error(f"Failed to start server: {e}", exc_info=True)
+        sys.exit(1)
 
 
 if __name__ == "__main__":
-    """Run the A2A agent server when executed as a module."""
-    settings = Settings()
-    # A2A agent runs on port 8001 by default
-    host = "0.0.0.0"
-    port = 8001
-    logger.info(f"Starting A2A Agent server on {host}:{port}")
-    
-    uvicorn.run(
-        "agent.server:app",
-        host=host,
-        port=port,
-        log_level="info",
-    )
+    main()
 
 # Made with Bob

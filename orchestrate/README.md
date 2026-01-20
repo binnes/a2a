@@ -23,16 +23,16 @@ source .venv/bin/activate
 
 # Create and import the agent (this also generates rag-agent-config.yml)
 orchestrate agents create \
-  -n shakespeare-rag-agent \
-  -t "Shakespeare Knowledge Agent" \
-  -k external \
-  --description "RAG agent with complete works of Shakespeare. Use for questions about Shakespeare's plays, sonnets, characters, quotes, and literary analysis." \
-  --api http://127.0.0.1:8001 \
-  --provider external_chat/A2A/0.3.0 \
-  -o rag-agent-config.yml
+-n shakespeare-rag-agent \
+-t "Shakespeare Knowledge Agent" \
+-k external \
+--description "RAG agent with complete works of Shakespeare. Use for questions about Shakespeare's plays, sonnets, characters, quotes, and literary analysis." \
+--api http://host.lima.internal:8001 \
+--provider external_chat/A2A/0.3.0 \
+-o rag-agent-config.yml
 ```
 
-**Important**: Use `127.0.0.1` instead of `localhost` to avoid IPv6 connection issues.
+**Important**: Use `host.lima.internal` to access the host machine from Lima VM where Orchestrate runs.
 
 **Knowledge Base**: This agent has access to the complete works of William Shakespeare, making it ideal for:
 - Questions about Shakespeare's plays and sonnets
@@ -85,10 +85,8 @@ The Shakespeare Knowledge Agent provides the following capabilities:
 
 ## Endpoints
 
-- **Health Check**: `http://localhost:8001/health`
-- **Capabilities**: `http://localhost:8001/capabilities`
-- **A2A Messages**: `http://localhost:8001/a2a/message`
-- **Direct Query**: `http://localhost:8001/query`
+- **Agent Card**: `http://localhost:8001/.well-known/agent-card.json`
+- **A2A Messages (JSONRPC)**: `http://localhost:8001/` (POST with JSONRPC payload)
 
 ## Verification
 

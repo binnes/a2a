@@ -16,7 +16,8 @@ def settings():
 @pytest.fixture
 def server_url(settings):
     """Get MCP server URL."""
-    return settings.mcp_server_url
+    # Use get_mcp_server_url() method which handles None case
+    return settings.get_mcp_server_url()
 
 
 @pytest.fixture

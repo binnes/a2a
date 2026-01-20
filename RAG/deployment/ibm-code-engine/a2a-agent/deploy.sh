@@ -137,8 +137,8 @@ if [[ $(ibmcloud ce application get -n rag-a2a-agent 2>&1 | grep 'Resource not f
         --env A2A_AGENT_ID="${A2A_AGENT_ID:-rag-agent}" \
         --env A2A_AGENT_NAME="${A2A_AGENT_NAME:-RAG Knowledge Agent}" \
         --env A2A_AGENT_DESCRIPTION="${A2A_AGENT_DESCRIPTION:-Agent for querying RAG knowledge base}" \
-        --env EMBEDDING_MODEL="${EMBEDDING_MODEL:-ibm/slate-125m-english-rtrvr}" \
-        --env EMBEDDING_DIMENSION="${EMBEDDING_DIMENSION:-384}" \
+        --env EMBEDDING_MODEL="${EMBEDDING_MODEL:-ibm/granite-embedding-278m-multilingual}" \
+        --env EMBEDDING_DIMENSION="${EMBEDDING_DIMENSION:-768}" \
         --env LLM_MODEL="${LLM_MODEL:-ibm/granite-13b-chat-v2}" \
         --env RAG_TOP_K="${RAG_TOP_K:-5}" \
         --env RAG_SCORE_THRESHOLD="${RAG_SCORE_THRESHOLD:-0.7}" \

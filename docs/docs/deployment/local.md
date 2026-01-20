@@ -218,12 +218,12 @@ Once the RAG agent is deployed locally, you can integrate it with IBM watsonx Or
      -t "Shakespeare Knowledge Agent" \
      -k external \
      --description "RAG agent with complete works of Shakespeare. Use for questions about Shakespeare's plays, sonnets, characters, quotes, and literary analysis." \
-     --api http://127.0.0.1:8001 \
+     --api http://host.lima.internal:8001 \
      --provider external_chat/A2A/0.3.0 \
      -o rag-agent-config.yml
    ```
    
-   **Note**: Use `127.0.0.1` instead of `localhost` to avoid IPv6 connection issues.
+   **Note**: Use `host.lima.internal` to access the host machine from Lima VM where Orchestrate runs.
    
    **Knowledge Base**: This agent contains the complete works of William Shakespeare and is ideal for literary questions, character analysis, and quote identification.
 

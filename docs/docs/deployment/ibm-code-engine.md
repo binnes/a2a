@@ -114,10 +114,10 @@ ibmcloud ce application logs -n rag-mcp-server
 
 | Variable | Description | Default |
 |----------|-------------|---------|
-| `EMBEDDING_MODEL` | Embedding model | `ibm/slate-125m-english-rtrvr` |
-| `EMBEDDING_DIMENSION` | Vector dimension | `384` |
-| `LLM_MODEL` | LLM model | `ibm/granite-13b-chat-v2` |
-| `LLM_MAX_TOKENS` | Max tokens | `2048` |
+| `EMBEDDING_MODEL` | Embedding model | `ibm/granite-embedding-278m-multilingual` |
+| `EMBEDDING_DIMENSION` | Vector dimension | `768` |
+| `LLM_MODEL` | LLM model | `openai/gpt-oss-120b` |
+| `LLM_MAX_TOKENS` | Max tokens | `16384` |
 | `LLM_TEMPERATURE` | Temperature | `0.7` |
 | `RAG_CHUNK_SIZE` | Chunk size | `512` |
 | `RAG_CHUNK_OVERLAP` | Chunk overlap | `50` |

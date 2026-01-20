@@ -125,8 +125,8 @@ WATSONX_API_KEY=your-api-key
 WATSONX_PROJECT_ID=your-project-id
 
 # Models (Optional)
-EMBEDDING_MODEL=ibm/slate-125m-english-rtrvr
-LLM_MODEL=ibm/granite-13b-chat-v2
+EMBEDDING_MODEL=ibm/granite-embedding-278m-multilingual
+LLM_MODEL=openai/gpt-oss-120b
 
 # Milvus (Auto-configured)
 MILVUS_HOST=milvus  # or external host

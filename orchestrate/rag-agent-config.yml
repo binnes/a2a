@@ -6,7 +6,7 @@ description: RAG agent with complete works of Shakespeare. Use for questions abo
 context_access_enabled: true
 context_variables: []
 title: Shakespeare Knowledge Agent
-api_url: http://127.0.0.1:8001
+api_url: http://host.lima.internal:8001/
 auth_scheme: NONE
 auth_config: {}
 provider: external_chat/A2A/0.3.0

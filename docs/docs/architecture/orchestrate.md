@@ -1,315 +1,359 @@
-# IBM Orchestrate Integration
+# IBM watsonx Orchestrate Integration
 
 ## Overview
 
-**IBM Orchestrate** serves as the core platform for our AI agent system, providing enterprise-grade orchestration, workflow management, and integration capabilities. It acts as the central nervous system that coordinates agent activities, manages workflows, and connects to external services.
+**IBM watsonx Orchestrate** serves as the orchestration platform for our AI agent system, providing enterprise-grade workflow management and agent coordination. The Shakespeare RAG Agent integrates with Orchestrate using the **A2A 0.3.0 protocol** via the official `a2a-server` framework.
 
-## Why IBM Orchestrate?
+## Why IBM watsonx Orchestrate?
 
-IBM Orchestrate was chosen as the foundation for several key reasons:
+IBM watsonx Orchestrate was chosen as the orchestration platform for several key reasons:
 
-### Enterprise-Grade Reliability
+### Enterprise-Grade Platform
 
-- **High Availability**: Built-in redundancy and failover mechanisms
-- **Scalability**: Handles thousands of concurrent workflows
-- **Performance**: Optimized for low-latency operations
-- **Monitoring**: Comprehensive observability and alerting
+- **Proven Reliability**: Production-ready platform from IBM
+- **Scalability**: Handles multiple concurrent agent interactions
+- **Developer Edition**: Local development and testing support
+- **Cloud Deployment**: Enterprise deployment options available
 
-### Integration Capabilities
+### A2A Protocol Support
 
-- **Pre-built Connectors**: Connect to 100+ enterprise systems
-- **API Gateway**: Unified interface for external services
-- **Data Transformation**: Built-in data mapping and transformation
-- **Event Processing**: Real-time event handling and routing
+- **Standards-Based**: Native support for A2A 0.3.0 protocol
+- **Agent Discovery**: Automatic agent registration and discovery
+- **Task Management**: Built-in task lifecycle management
+- **Streaming Updates**: Real-time progress updates during execution
 
-### Workflow Management
+### Integration Features
 
-- **Visual Designer**: Create workflows with drag-and-drop interface
-- **Version Control**: Track and manage workflow versions
-- **Testing Tools**: Built-in testing and debugging capabilities
-- **Deployment**: Automated deployment pipelines
+- **Chat Interface**: User-friendly interface for agent interaction
+- **Workflow Builder**: Create multi-agent workflows
+- **Monitoring**: Built-in observability and logging
+- **Security**: Enterprise-grade authentication and authorization
 
 ## Architecture Integration
 
 ```mermaid
 graph TB
-    subgraph "AI Agent Platform"
-        AM[Agent Manager]
-        WM[Workflow Manager]
-        CM[Context Manager]
+    subgraph "IBM watsonx Orchestrate"
+        UI[Chat Interface]
+        WF[Workflow Engine]
+        AR[Agent Registry]
+        TM[Task Manager]
     end
     
-    subgraph "IBM Orchestrate"
-        OC[Orchestrate Core]
-        WE[Workflow Engine]
-        IM[Integration Manager]
-        EM[Event Manager]
-        SM[Security Manager]
+    subgraph "A2A Agent Server"
+        AC[Agent Card<br/>/.well-known/agent-card.json]
+        RH[Request Handler]
+        AE[Agent Executor]
+        EQ[Event Queue]
     end
     
-    subgraph "Agents"
-        A1[Agent 1]
-        A2[Agent 2]
-        A3[Agent 3]
+    subgraph "RAG Agent"
+        LG[LangGraph Workflow]
+        MCP[MCP Tool Client]
     end
     
-    subgraph "External Systems"
-        CRM[CRM Systems]
-        ERP[ERP Systems]
-        DB[(Databases)]
-        API[External APIs]
-        CLOUD[Cloud Services]
+    subgraph "Backend Services"
+        MCPS[MCP Server]
+        MILVUS[Milvus Vector DB]
+        WX[Watsonx.ai]
     end
     
-    AM --> OC
-    WM --> WE
-    CM --> OC
+    UI --> WF
+    WF -->|JSON-RPC 2.0| AC
+    AC --> RH
+    RH --> AE
+    AE --> LG
+    AE --> EQ
+    EQ -->|Task Updates| TM
+    TM --> UI
     
-    OC --> A1
-    OC --> A2
-    OC --> A3
+    LG --> MCP
+    MCP --> MCPS
+    MCPS --> MILVUS
+    MCPS --> WX
     
-    WE --> IM
-    IM --> CRM
-    IM --> ERP
-    IM --> DB
-    IM --> API
-    IM --> CLOUD
+    AR -.->|Discovery| AC
     
-    EM --> OC
-    SM --> OC
-    
-    A1 --> EM
-    A2 --> EM
-    A3 --> EM
-    
-    style OC fill:#0f62fe
-    style WE fill:#0f62fe
-    style IM fill:#0f62fe
+    style UI fill:#0f62fe
+    style WF fill:#0f62fe
+    style AC fill:#ff832b
+    style RH fill:#ff832b
+    style AE fill:#ff832b
 ```
 
-## Key Features
+## Agent Registration
 
-### 1. Workflow Orchestration
+### Using Orchestrate CLI
 
-IBM Orchestrate manages complex workflows that coordinate multiple agents and services:
+Register the Shakespeare RAG Agent with Orchestrate:
+
+```bash
+# Activate orchestrate virtual environment
+source .venv/bin/activate
+
+# Create and import the agent
+orchestrate agents create \
+  -n shakespeare-rag-agent \
+  -t "Shakespeare Knowledge Agent" \
+  -k external \
+  --description "RAG agent with complete works of Shakespeare. Use for questions about Shakespeare's plays, sonnets, characters, quotes, and literary analysis." \
+  --api http://host.lima.internal:8001 \
+  --provider external_chat/A2A/0.3.0 \
+  -o rag-agent-config.yml
+```
+
+**Important Notes:**
+- Use `host.lima.internal` to access the host machine from Lima VM where Orchestrate runs
+- The agent must be running on `http://localhost:8001` before registration
+- Configuration is saved to `rag-agent-config.yml` for future reference
+
+### Agent Configuration File
+
+The generated configuration file (`rag-agent-config.yml`) contains:
+
+```yaml
+name: shakespeare-rag-agent
+title: Shakespeare Knowledge Agent
+kind: external
+description: RAG agent with complete works of Shakespeare
+api: http://host.lima.internal:8001
+provider: external_chat/A2A/0.3.0
+```
+
+### Verifying Registration
+
+```bash
+# List imported agents
+orchestrate agents list
+
+# Test agent health
+curl http://localhost:8001/health
+
+# View agent card
+curl http://localhost:8001/.well-known/agent-card.json
+```
+
+## Agent Capabilities
+
+The Shakespeare RAG Agent exposes the following capabilities through its agent card:
+
+### Skills
+
+- **ID**: `shakespeare_knowledge`
+- **Name**: Shakespeare Knowledge Base
+- **Description**: Search and answer questions about Shakespeare's complete works
+- **Tags**: shakespeare, literature, plays, sonnets, poetry, drama, elizabethan
+
+### Example Queries
+
+- "Who is Hamlet?"
+- "What are the main characters in Othello?"
+- "Tell me about Romeo and Juliet"
+- "What happens in Macbeth?"
+- "Who wrote 'To be or not to be'?"
+
+### Input/Output Modes
+
+- **Input**: text, text/plain
+- **Output**: text, text/plain
+
+### Capabilities
+
+- **Streaming**: Not supported (synchronous responses)
+- **Push Notifications**: Not supported
+
+## Using the Agent
+
+### Through Orchestrate UI
+
+Once registered, the agent is available in the Orchestrate chat interface:
+
+1. Open IBM watsonx Orchestrate Developer Edition
+2. Navigate to the chat interface
+3. Type a question about Shakespeare
+4. The agent will process the query and return an answer with sources
+
+### Example Interaction
+
+```
+User: Who is Hamlet?
+
+Agent: Searching Shakespeare's works for relevant information...
+
+Agent: Hamlet is the Prince of Denmark and the protagonist of William
+Shakespeare's tragedy "Hamlet." He is the son of the late King Hamlet
+and Queen Gertrude. The play follows Hamlet as he seeks to avenge his
+father's murder by his uncle Claudius, who has married Gertrude and
+taken the throne...
+
+[Sources: Hamlet, Act I, Scene II; Hamlet, Act III, Scene I]
+```
+
+### In Workflows
+
+The agent can be included in Orchestrate workflows:
 
 ```yaml
 workflow:
-  name: customer-inquiry-handler
-  trigger: incoming-message
+  name: literary-analysis
   steps:
-    - name: classify-inquiry
-      agent: classification-agent
-      timeout: 5s
+    - name: query-shakespeare
+      agent: shakespeare-rag-agent
+      input: ${user.question}
     
-    - name: route-to-specialist
-      agent: routing-agent
-      input: ${classify-inquiry.output}
+    - name: summarize
+      agent: summarization-agent
+      input: ${query-shakespeare.response}
     
-    - name: process-inquiry
-      agent: ${route-to-specialist.specialist}
-      input: ${classify-inquiry.context}
-    
-    - name: send-response
+    - name: present-results
       action: send-message
-      input: ${process-inquiry.response}
+      input: ${summarize.output}
 ```
 
-### 2. Agent Lifecycle Management
+## Monitoring and Debugging
 
-Orchestrate handles the complete agent lifecycle:
+### Agent Logs
 
-- **Provisioning**: Automatic agent deployment and configuration
-- **Scaling**: Dynamic scaling based on workload
-- **Health Monitoring**: Continuous health checks and recovery
-- **Decommissioning**: Graceful shutdown and cleanup
+View agent logs in the Orchestrate interface or via CLI:
 
-### 3. Event-Driven Architecture
+```bash
+# View agent logs
+orchestrate agents logs shakespeare-rag-agent
 
-Support for event-driven patterns:
-
-- **Event Subscriptions**: Agents subscribe to relevant events
-- **Event Routing**: Intelligent routing based on event types
-- **Event Transformation**: Convert events between formats
-- **Event Replay**: Replay events for debugging or recovery
-
-### 4. Security and Compliance
-
-Enterprise security features:
-
-- **Authentication**: OAuth 2.0, SAML, API keys
-- **Authorization**: Role-based access control (RBAC)
-- **Encryption**: End-to-end encryption for data in transit
-- **Audit Logging**: Comprehensive audit trails
-- **Compliance**: SOC 2, GDPR, HIPAA compliance
-
-## Configuration
-
-### Basic Configuration
-
-```python
-from orchestrate import OrchestratePlatform
-
-# Initialize Orchestrate connection
-orchestrate = OrchestratePlatform(
-    api_key=os.getenv('ORCHESTRATE_API_KEY'),
-    endpoint=os.getenv('ORCHESTRATE_ENDPOINT'),
-    workspace_id=os.getenv('ORCHESTRATE_WORKSPACE_ID')
-)
-
-# Register an agent
-orchestrate.register_agent(
-    name='customer-service-agent',
-    type='conversational',
-    capabilities=['chat', 'email', 'ticket-management'],
-    max_instances=10
-)
+# Follow logs in real-time
+orchestrate agents logs shakespeare-rag-agent --follow
 ```
 
-### Advanced Configuration
+### Health Checks
 
-```python
-# Configure workflow with error handling
-workflow = orchestrate.create_workflow(
-    name='order-processing',
-    retry_policy={
-        'max_attempts': 3,
-        'backoff': 'exponential',
-        'initial_delay': 1000
-    },
-    error_handlers={
-        'timeout': 'notify-admin',
-        'validation_error': 'return-to-user',
-        'system_error': 'escalate'
-    }
-)
+The agent exposes a health endpoint:
+
+```bash
+# Check agent health
+curl http://localhost:8001/health
+
+# Expected response
+{
+  "agent": true,
+  "mcp_server": true
+}
 ```
 
-## Integration Patterns
+### Task Status
 
-### 1. Request-Response Pattern
+Monitor task execution through Orchestrate:
 
-Synchronous communication for immediate responses:
+- **pending**: Task created, waiting to start
+- **working**: Agent is processing the query
+- **completed**: Task finished successfully
+- **failed**: Task encountered an error
 
-```python
-response = orchestrate.invoke_agent(
-    agent_id='classification-agent',
-    input={'text': 'Customer inquiry text'},
-    timeout=5000
-)
+### Performance Metrics
+
+Key metrics to monitor:
+
+- **Response Time**: Average time to process queries
+- **Success Rate**: Percentage of successful completions
+- **Error Rate**: Percentage of failed queries
+- **Throughput**: Queries processed per minute
+
+## Deployment Options
+
+### Local Development
+
+Use Orchestrate Developer Edition for local development:
+
+```bash
+# Start Orchestrate
+cd orchestrate
+bash scripts/startOrchestrate.sh
+
+# Start RAG agent
+cd RAG/deployment/local
+bash deploy.sh
+
+# Register agent
+orchestrate agents create -n shakespeare-rag-agent ...
 ```
 
-### 2. Fire-and-Forget Pattern
+### Production Deployment
 
-Asynchronous processing for long-running tasks:
+For production deployments:
 
-```python
-orchestrate.submit_task(
-    agent_id='data-processing-agent',
-    input={'dataset': 'large-dataset.csv'},
-    callback_url='https://api.example.com/callback'
-)
+1. **Deploy RAG Agent**: Use IBM Code Engine or Kubernetes
+2. **Configure Networking**: Ensure Orchestrate can reach the agent
+3. **Set Environment Variables**: Configure API keys and endpoints
+4. **Register Agent**: Use production agent URL
+5. **Monitor**: Set up logging and alerting
+
+### Environment Variables
+
+Required environment variables for the agent:
+
+```bash
+# Watsonx.ai Configuration
+WATSONX_APIKEY=your-api-key
+WATSONX_PROJECT_ID=your-project-id
+WATSONX_URL=https://us-south.ml.cloud.ibm.com
+
+# A2A Configuration
+A2A_AGENT_ID=shakespeare-rag-agent
+A2A_AGENT_NAME="Shakespeare Knowledge Agent"
+A2A_HOST=0.0.0.0
+A2A_PORT=8001
+
+# MCP Server Configuration
+MCP_SERVER_HOST=mcp-server
+MCP_SERVER_PORT=8000
 ```
-
-### 3. Pub-Sub Pattern
-
-Event-driven communication:
-
-```python
-orchestrate.subscribe(
-    agent_id='notification-agent',
-    events=['order.created', 'order.updated'],
-    handler=handle_order_event
-)
-```
-
-## Monitoring and Observability
-
-### Metrics
-
-IBM Orchestrate provides comprehensive metrics:
-
-- **Agent Performance**: Response times, success rates, error rates
-- **Workflow Execution**: Duration, step completion, bottlenecks
-- **Resource Usage**: CPU, memory, network utilization
-- **Integration Health**: External service availability and latency
-
-### Logging
-
-Structured logging for debugging and analysis:
-
-```python
-orchestrate.logger.info(
-    'Agent invoked',
-    agent_id='customer-service-agent',
-    request_id='req-12345',
-    user_id='user-67890'
-)
-```
-
-### Alerting
-
-Configure alerts for critical events:
-
-```python
-orchestrate.create_alert(
-    name='high-error-rate',
-    condition='error_rate > 0.05',
-    notification_channels=['email', 'slack'],
-    severity='critical'
-)
-```
-
-## Best Practices
-
-### 1. Workflow Design
-
-- Keep workflows modular and reusable
-- Implement proper error handling
-- Use timeouts to prevent hanging operations
-- Design for idempotency
-
-### 2. Agent Configuration
-
-- Set appropriate resource limits
-- Configure health checks
-- Implement graceful degradation
-- Use circuit breakers for external services
-
-### 3. Security
-
-- Rotate API keys regularly
-- Use least-privilege access
-- Encrypt sensitive data
-- Implement rate limiting
-
-### 4. Performance
-
-- Cache frequently accessed data
-- Use async operations where possible
-- Implement connection pooling
-- Monitor and optimize bottlenecks
 
 ## Troubleshooting
 
-### Common Issues
+### Agent Not Responding
 
-**Issue**: Agent not responding
+**Symptoms**: Queries timeout or return no response
 
-**Solution**: Check agent health status and logs in Orchestrate dashboard
+**Solutions**:
+1. Check if agent is running: `curl http://localhost:8001/health`
+2. Verify MCP server is accessible
+3. Check agent logs for errors
+4. Ensure network connectivity between Orchestrate and agent
 
-**Issue**: Workflow timeout
+### Registration Failed
 
-**Solution**: Increase timeout values or optimize workflow steps
+**Symptoms**: Agent registration command fails
 
-**Issue**: Integration failures
+**Solutions**:
+1. Verify Orchestrate is running: `orchestrate server status`
+2. Check agent is accessible from Orchestrate VM
+3. Use `host.lima.internal` for Lima VM deployments
+4. Verify agent card is accessible: `curl http://localhost:8001/.well-known/agent-card.json`
 
-**Solution**: Verify external service credentials and network connectivity
+### Query Errors
+
+**Symptoms**: Agent returns errors for queries
+
+**Solutions**:
+1. Check MCP server logs
+2. Verify Watsonx.ai credentials
+3. Ensure Milvus vector database is running
+4. Check knowledge base has been indexed
+
+### Performance Issues
+
+**Symptoms**: Slow response times
+
+**Solutions**:
+1. Monitor resource usage (CPU, memory)
+2. Check network latency
+3. Optimize vector search parameters
+4. Scale backend services if needed
 
 ## Resources
 
-- [IBM Orchestrate Documentation](https://www.ibm.com/docs/orchestrate)
-- [API Reference](../api/reference.md)
-- [MCP Protocol](../protocols/mcp.md)
+- [IBM watsonx Orchestrate Documentation](https://www.ibm.com/docs/en/watsonx/orchestrate)
 - [A2A Protocol](../protocols/a2a.md)
+- [RAG Agent Implementation](../../RAG/agent/a2a_agent.py)
+- [Agent Executor](../../RAG/agent/agent_executor.py)
+- [Orchestrate README](../../orchestrate/README.md)
+- [Deployment Guide](../deployment/orchestrate.md)

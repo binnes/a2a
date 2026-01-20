@@ -41,7 +41,6 @@ LLM_TEMPERATURE=0.7
 | Model | Type | Dimension | Token Limit |
 |-------|------|-----------|-------------|
 | `ibm/granite-embedding-278m-multilingual` | Embedding | 768 | 512 |
-| `ibm/slate-125m-english-rtrvr-v2` | Embedding | 384 | 512 |
 | `openai/gpt-oss-120b` | LLM | - | 16384 |
 | `ibm/granite-3-8b-instruct` | LLM | - | 8192 |
 
@@ -143,8 +142,8 @@ RAG_CHUNK_SIZE=80-120  # words
 ```
 
 **Considerations**:
-- Embedding model token limit (512 tokens for granite-embedding-278m)
-- Context window of LLM (16384 tokens for gpt-oss-120b)
+- Embedding model token limit (512 tokens for granite-embedding-278m-multilingual)
+- Context window of LLM (16384 tokens for openai/gpt-oss-120b)
 - Document structure and formatting
 - Query complexity
 - Word-to-token ratio (approximately 1.3 tokens per word)
@@ -208,7 +207,7 @@ LLM_TEMPERATURE=0.7  # Balanced
 # 0.8-1.0: Creative, varied
 
 # Max tokens (response length)
-LLM_MAX_TOKENS=16384  # Maximum for gpt-oss-120b
+LLM_MAX_TOKENS=16384  # Maximum for openai/gpt-oss-120b
 # 512: Brief responses
 # 1024: Standard responses
 # 4096: Detailed responses
@@ -364,12 +363,12 @@ from config.settings import get_settings
 settings = get_settings()
 
 # Access settings
-print(f"Embedding model: {settings.watsonx_embedding_model}")
+print(f"Embedding model: {settings.embedding_model}")
 print(f"Chunk size: {settings.rag_chunk_size}")
 print(f"Top K: {settings.rag_top_k}")
 
 # Validate configuration
-assert settings.embedding_dimension == 384
+assert settings.embedding_dimension == 768
 assert settings.rag_chunk_size <= 512
 ```
 
@@ -382,7 +381,7 @@ python -c "
 from config.settings import get_settings
 settings = get_settings()
 print('Configuration valid!')
-print(f'Embedding model: {settings.watsonx_embedding_model}')
+print(f'Embedding model: {settings.embedding_model}')
 print(f'Milvus host: {settings.milvus_host}')
 "
 ```
@@ -412,7 +411,7 @@ RAG_TOP_K=10  # Increased from 5
 # Solution: Optimize Milvus and reduce top-k
 MILVUS_INDEX_TYPE=IVF_SQ8
 RAG_TOP_K=3  # Reduced from 5
-WATSONX_LLM_MAX_TOKENS=256  # Reduced from 512
+LLM_MAX_TOKENS=256  # Reduced from 512
 ```
 
 **Issue**: High memory usage

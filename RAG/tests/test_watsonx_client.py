@@ -16,7 +16,7 @@ def mock_settings():
     settings.watsonx_api_key = "test_api_key"
     settings.watsonx_project_id = "test_project_id"
     settings.embedding_model = "ibm/granite-embedding-278m-multilingual"
-    settings.llm_model = "ibm/granite-13b-chat-v2"
+    settings.llm_model = "openai/gpt-oss-120b"
     settings.embedding_dimension = 768
     settings.llm_max_tokens = 512
     settings.llm_temperature = 0.7

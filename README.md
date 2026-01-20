@@ -1,12 +1,13 @@
 # AI Agents Project
 
-Implementation of Agent-to-Agent (A2A) and Model Context Protocol (MCP) standards using IBM Orchestrate, featuring a production-ready RAG agent with Watsonx.ai and Milvus.
+Implementation of Agent-to-Agent (A2A) and Model Context Protocol (MCP) standards using IBM watsonx Orchestrate, featuring a production-ready RAG agent with Watsonx.ai and Milvus.
 
 ## Overview
 
 This repository contains:
 
-- **A2A RAG Agent**: Production implementation of A2A protocol with RAG capabilities
+- **A2A RAG Agent**: Production implementation of A2A 0.3.0 protocol using `a2a-server` framework
+- **IBM watsonx Orchestrate Integration**: Enterprise agent orchestration and workflow management
 - **MCP Server**: RESTful API implementing Model Context Protocol
 - **Watsonx.ai Integration**: IBM's AI platform for embeddings and LLM services
 - **Milvus Vector Store**: High-performance semantic search
@@ -56,59 +57,50 @@ curl -X POST http://localhost:8000/tools/rag_query \
 
 ```mermaid
 graph TB
-    subgraph "IBM Orchestrate Platform"
-        O[IBM Orchestrate Core]
-        AM[Agent Manager]
-        WE[Workflow Engine]
-    end
-    
-    subgraph "MCP Layer"
-        MCP[Model Context Protocol]
-        CM[Context Manager]
-        MM[Model Manager]
-    end
-    
-    subgraph "A2A Layer"
-        A2A[Agent-to-Agent Protocol]
-        MB[Message Bus]
+    subgraph "IBM watsonx Orchestrate"
+        UI[Chat Interface]
+        WF[Workflow Engine]
         AR[Agent Registry]
     end
     
-    subgraph "AI Agents"
-        RAG[RAG Agent]
-        A2[Agent 2]
-        A3[Agent 3]
+    subgraph "A2A Agent Server"
+        AC[Agent Card<br/>/.well-known/agent-card.json]
+        RH[Request Handler]
+        AE[Agent Executor]
+        EQ[Event Queue]
     end
     
-    subgraph "External Systems"
-        WX[Watsonx.ai]
-        MV[(Milvus)]
-        API[External APIs]
+    subgraph "RAG Agent Core"
+        LG[LangGraph Workflow]
+        MCP[MCP Tool Client]
     end
     
-    O --> AM
-    O --> WE
-    AM --> MCP
-    AM --> A2A
+    subgraph "Backend Services"
+        MCPS[MCP Server<br/>FastAPI]
+        MILVUS[Milvus<br/>Vector DB]
+        WX[Watsonx.ai<br/>LLM + Embeddings]
+    end
     
-    MCP --> CM
-    MCP --> MM
-    MM --> WX
+    UI --> WF
+    WF -->|A2A 0.3.0<br/>JSON-RPC 2.0| AC
+    AC --> RH
+    RH --> AE
+    AE --> LG
+    AE --> EQ
+    EQ -->|Task Updates| WF
     
-    A2A --> MB
-    A2A --> AR
+    LG --> MCP
+    MCP -->|HTTP/REST| MCPS
+    MCPS --> MILVUS
+    MCPS --> WX
     
-    RAG --> MCP
-    RAG <--> MB
-    RAG --> MV
+    AR -.->|Discovery| AC
     
-    A2 --> MCP
-    A2 <--> MB
-    
-    A3 --> MCP
-    A3 <--> MB
-    
-    WE --> API
+    style UI fill:#0f62fe
+    style WF fill:#0f62fe
+    style AC fill:#ff832b
+    style RH fill:#ff832b
+    style AE fill:#ff832b
 ```
 
 ## Documentation
@@ -218,7 +210,9 @@ Test results: 34/34 passing (100% coverage)
 
 | Component | Technology |
 |-----------|-----------|
+| A2A Protocol | a2a-server (A2A 0.3.0) |
 | Agent Framework | LangGraph |
+| Orchestration | IBM watsonx Orchestrate |
 | MCP Server | FastAPI |
 | AI Platform | IBM Watsonx.ai |
 | Vector Database | Milvus |
@@ -240,7 +234,8 @@ Test results: 34/34 passing (100% coverage)
 
 | Component | Status | Tests |
 |-----------|--------|-------|
-| A2A RAG Agent | Complete | 34/34 passing |
+| A2A RAG Agent (0.3.0) | Complete | 34/34 passing |
+| IBM Orchestrate Integration | Complete | Tested |
 | MCP Server | Complete | 18/18 passing |
 | Watsonx.ai Integration | Complete | Tested |
 | Milvus Vector Store | Complete | Tested |

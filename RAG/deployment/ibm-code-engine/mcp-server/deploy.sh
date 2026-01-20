@@ -165,8 +165,8 @@ if [[ $(ibmcloud ce application get -n rag-mcp-server 2>&1 | grep 'Resource not 
         --env MCP_SERVER_HOST="0.0.0.0" \
         --env MCP_SERVER_PORT="8000" \
         --env MCP_SERVER_RELOAD="false" \
-        --env EMBEDDING_MODEL="${EMBEDDING_MODEL:-ibm/slate-125m-english-rtrvr}" \
-        --env EMBEDDING_DIMENSION="${EMBEDDING_DIMENSION:-384}" \
+        --env EMBEDDING_MODEL="${EMBEDDING_MODEL:-ibm/granite-embedding-278m-multilingual}" \
+        --env EMBEDDING_DIMENSION="${EMBEDDING_DIMENSION:-768}" \
         --env LLM_MODEL="${LLM_MODEL:-ibm/granite-13b-chat-v2}" \
         --env LLM_MAX_TOKENS="${LLM_MAX_TOKENS:-2048}" \
         --env LLM_TEMPERATURE="${LLM_TEMPERATURE:-0.7}" \

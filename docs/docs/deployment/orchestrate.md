@@ -775,12 +775,12 @@ orchestrate agents create \
   -t "Shakespeare Knowledge Agent" \
   -k external \
   --description "RAG agent with complete works of Shakespeare. Use for questions about Shakespeare's plays, sonnets, characters, quotes, and literary analysis." \
-  --api http://127.0.0.1:8001 \
+  --api http://host.lima.internal:8001 \
   --provider external_chat/A2A/0.3.0 \
   -o rag-agent-config.yml
 ```
 
-**Important**: Use `127.0.0.1` instead of `localhost` to avoid IPv6 connection issues.
+**Important**: Use `host.lima.internal` to access the host machine from Lima VM where Orchestrate runs.
 
 This command:
 - Creates an external agent with A2A protocol support

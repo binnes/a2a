@@ -61,8 +61,8 @@ WATSONX_PROJECT_ID=your-project-id-here
 
 # Optional (defaults provided)
 WATSONX_URL=https://us-south.ml.cloud.ibm.com
-EMBEDDING_MODEL=ibm/slate-125m-english-rtrvr
-LLM_MODEL=ibm/granite-13b-chat-v2
+EMBEDDING_MODEL=ibm/granite-embedding-278m-multilingual
+LLM_MODEL=openai/gpt-oss-120b
 ```
 
 ## Deployment Commands

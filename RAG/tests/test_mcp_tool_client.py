@@ -13,6 +13,7 @@ def mock_settings():
     """Create mock settings."""
     settings = Mock(spec=Settings)
     settings.mcp_server_url = "http://localhost:8000"
+    settings.get_mcp_server_url = Mock(return_value="http://localhost:8000")
     return settings
 
 
@@ -258,19 +259,19 @@ class TestMCPToolClientHealthCheck:
         # Setup
         client = MCPToolClient(mock_settings)
         
-        mock_response = AsyncMock()
+        mock_response = Mock()
         mock_response.status_code = 200
         
-        client.client.get = AsyncMock(return_value=mock_response)
-        
-        # Execute
-        is_healthy = await client.health_check()
-        
-        # Verify
-        assert is_healthy is True
-        client.client.get.assert_called_once_with(
-            "http://localhost:8000/health"
-        )
+        with patch('agent.tools.requests.get', return_value=mock_response) as mock_get:
+            # Execute
+            is_healthy = await client.health_check()
+            
+            # Verify
+            assert is_healthy is True
+            mock_get.assert_called_once_with(
+                "http://localhost:8000/health",
+                timeout=5
+            )
 
     @pytest.mark.asyncio
     async def test_health_check_unhealthy(self, mock_settings):
@@ -278,29 +279,28 @@ class TestMCPToolClientHealthCheck:
         # Setup
         client = MCPToolClient(mock_settings)
         
-        mock_response = AsyncMock()
+        mock_response = Mock()
         mock_response.status_code = 500
         
-        client.client.get = AsyncMock(return_value=mock_response)
-        
-        # Execute
-        is_healthy = await client.health_check()
-        
-        # Verify
-        assert is_healthy is False
+        with patch('agent.tools.requests.get', return_value=mock_response):
+            # Execute
+            is_healthy = await client.health_check()
+            
+            # Verify
+            assert is_healthy is False
 
     @pytest.mark.asyncio
     async def test_health_check_connection_error(self, mock_settings):
         """Test health check handles connection errors."""
         # Setup
         client = MCPToolClient(mock_settings)
-        client.client.get = AsyncMock(side_effect=httpx.HTTPError("Connection refused"))
         
-        # Execute
-        is_healthy = await client.health_check()
-        
-        # Verify
-        assert is_healthy is False
+        with patch('agent.tools.requests.get', side_effect=Exception("Connection refused")):
+            # Execute
+            is_healthy = await client.health_check()
+            
+            # Verify
+            assert is_healthy is False
 
 
 class TestMCPToolClientClose:
