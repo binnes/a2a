@@ -1900,15 +1900,19 @@
 <h1 id="local-deployment">Local Deployment</h1>
 <p>Deploy RAG agents locally using Podman for development and testing.</p>
 <h2 id="overview">Overview</h2>
-<p>Local deployment provides a complete RAG environment running on your machine using Podman containers. This is ideal for:</p>
+<p>Local deployment provides a complete RAG environment with containers running on your machine using Podman. The system uses <strong>watsonx.ai</strong> (IBM Cloud) for embedding generation and LLM inferencing, while vector storage and search run locally. This is ideal for:</p>
 <ul>
 <li>Development and testing</li>
 <li>Learning the system</li>
-<li>Offline work</li>
-<li>Low cost experimentation (cloud services used for generating embeddings and LLM inference)</li>
+<li>Cost-effective experimentation (only pay for watsonx.ai API usage)</li>
+<li>Local data processing with cloud AI capabilities</li>
 </ul>
 <h2 id="architecture">Architecture</h2>
 <pre class="mermaid"><code>graph TB
+    subgraph "IBM Cloud"
+        WX[watsonx.ai]
+    end
+
     subgraph "Local Machine"
         A2A[A2A Agent&lt;br/&gt;:8001]
         MCP[MCP Server&lt;br/&gt;:8000]
@@ -1919,10 +1923,26 @@
 
         A2A --&gt;|Query| MCP
         MCP --&gt;|Vector Search| Milvus
+        MCP --&gt;|Embeddings| WX
+        MCP --&gt;|LLM Inference| WX
         Milvus --&gt;|Metadata| etcd
         Milvus --&gt;|Storage| MinIO
-        Loader -.-&gt;|Load Shakespeare| Milvus
+        Loader -.-&gt;|Load Documents| Milvus
+        Loader --&gt;|Generate Embeddings| WX
     end</code></pre>
+<p><strong>Key Components:</strong></p>
+<ul>
+<li><strong>watsonx.ai (IBM Cloud)</strong>: Provides embedding generation and LLM inferencing</li>
+<li>Embedding Model: <code>ibm/granite-embedding-278m-multilingual</code></li>
+<li>LLM Model: <code>openai/gpt-oss-120b</code></li>
+<li><strong>Local Containers</strong>: Run on your machine using Podman</li>
+<li>A2A Agent: Agent-to-Agent protocol interface</li>
+<li>MCP Server: Model Context Protocol server with RAG tools</li>
+<li>Milvus: Vector database for semantic search</li>
+<li>etcd: Metadata storage for Milvus</li>
+<li>MinIO: Object storage for Milvus</li>
+<li>Data Loader: One-time job to load and index documents</li>
+</ul>
 <h2 id="prerequisites">Prerequisites</h2>
 <h3 id="required-software">Required Software</h3>
 <ol>
@@ -2038,8 +2058,8 @@
 </li>
 <li>Build data loader container</li>
 <li>Process Shakespeare text</li>
-<li>Generate embeddings</li>
-<li>Index in Milvus</li>
+<li>Generate embeddings via watsonx.ai</li>
+<li>Index embeddings in Milvus</li>
 </ol>
 <h2 id="service-endpoints">Service Endpoints</h2>
 <p>After deployment, services are available at:</p>
