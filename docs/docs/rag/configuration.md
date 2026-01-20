@@ -6,13 +6,13 @@ Comprehensive configuration options for the A2A RAG Agent system.
 
 ### Primary Configuration
 
-**File**: [`RAG/config/.env`](../../RAG/config/.env)
+**File**: `RAG/config/.env`
 
 This file contains all environment variables for the system.
 
 ### Settings Module
 
-**File**: [`RAG/config/settings.py`](../../RAG/config/settings.py)
+**File**: `RAG/config/settings.py`
 
 Pydantic-based settings management with validation and type safety.
 

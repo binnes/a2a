@@ -437,6 +437,6 @@ workflow = orchestrate.create_workflow(
 ## Resources
 
 - [MCP Specification](https://modelcontextprotocol.io/)
-- [API Reference](../api/reference.md)
+- [API Reference](../rag/api-reference.md)
 - [A2A Protocol](a2a.md)
 - [Architecture Overview](../architecture/overview.md)

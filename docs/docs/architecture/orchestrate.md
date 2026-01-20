@@ -353,7 +353,7 @@ MCP_SERVER_PORT=8000
 
 - [IBM watsonx Orchestrate Documentation](https://www.ibm.com/docs/en/watsonx/orchestrate)
 - [A2A Protocol](../protocols/a2a.md)
-- [RAG Agent Implementation](../../RAG/agent/a2a_agent.py)
-- [Agent Executor](../../RAG/agent/agent_executor.py)
-- [Orchestrate README](../../orchestrate/README.md)
+- RAG Agent Implementation: `RAG/agent/a2a_agent.py`
+- Agent Executor: `RAG/agent/agent_executor.py`
+- Orchestrate README: `orchestrate/README.md`
 - [Deployment Guide](../deployment/orchestrate.md)

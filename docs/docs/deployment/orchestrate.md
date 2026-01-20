@@ -144,6 +144,8 @@ This starts Orchestrate with:
 curl http://localhost:8001/health
 
 # Check agent capabilities
+curl http://localhost:8001/.well-known/agent-card.json
+```
 
 ## Production Deployment
 
@@ -1157,9 +1159,9 @@ curl http://localhost:8000/health
 
 ### Configuration
 
-- [Agent Configuration File](../../orchestrate/rag-agent-config.yml)
-- [Environment Variables](../../orchestrate/.env.example)
-- [Start Script](../../orchestrate/scripts/startOrchestrate.sh)
+- Agent Configuration File: `orchestrate/rag-agent-config.yml`
+- Environment Variables: `orchestrate/.env.example`
+- Start Script: `orchestrate/scripts/startOrchestrate.sh`
 
 ### Support
 

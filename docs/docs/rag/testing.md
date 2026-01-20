@@ -63,7 +63,7 @@ curl http://localhost:8000/health
 
 ### Test Configuration
 
-Tests use [`pytest.ini`](../../RAG/pytest.ini) for configuration:
+Tests use `pytest.ini` (located in the RAG directory) for configuration:
 
 ```ini
 [pytest]
@@ -82,7 +82,7 @@ log_cli_level = INFO
 
 ### 1. A2A Agent Tests
 
-**Location**: [`tests/test_a2a_agent.py`](../../RAG/tests/test_a2a_agent.py)
+**Location**: `RAG/tests/test_a2a_agent.py`
 
 **Coverage**:
 - Agent initialization
@@ -121,7 +121,7 @@ python -m pytest tests/ -v -k "agent"
 
 ### 2. MCP Server Integration Tests
 
-**Location**: [`tests/test_mcp_server_integration.py`](../../RAG/tests/test_mcp_server_integration.py)
+**Location**: `RAG/tests/test_mcp_server_integration.py`
 
 **Coverage**:
 - Health endpoint functionality
@@ -161,7 +161,7 @@ python -m pytest tests/test_mcp_server_integration.py -v
 
 ### 3. MCP Tool Client Tests
 
-**Location**: [`tests/test_mcp_tool_client.py`](../../RAG/tests/test_mcp_tool_client.py)
+**Location**: `RAG/tests/test_mcp_tool_client.py`
 
 **Coverage**:
 - Client initialization
@@ -197,7 +197,7 @@ python -m pytest tests/test_mcp_tool_client.py -v
 
 ### 4. Document Processor Tests
 
-**Location**: [`tests/test_document_processor.py`](../../RAG/tests/test_document_processor.py)
+**Location**: `RAG/tests/test_document_processor.py`
 
 **Coverage**:
 - Text file processing
@@ -233,7 +233,7 @@ python -m pytest tests/test_document_processor.py -v
 
 ### Shakespeare Dataset
 
-**File**: [`data/reference/complete works of Shakespear.txt`](../../RAG/data/reference/complete%20works%20of%20Shakespear.txt)
+**File**: `RAG/data/reference/complete works of Shakespear.txt`
 
 - **Size**: 196,396 lines
 - **Content**: Complete works of William Shakespeare

@@ -466,8 +466,8 @@ result = a2a.execute_workflow(
 
 - [A2A 0.3.0 Specification](https://github.com/IBM/agent-to-agent-protocol)
 - [a2a-server Framework](https://pypi.org/project/a2a-server/)
-- [RAG Agent Implementation](../../RAG/agent/a2a_agent.py)
-- [Agent Executor](../../RAG/agent/agent_executor.py)
+- RAG Agent Implementation: `RAG/agent/a2a_agent.py`
+- Agent Executor: `RAG/agent/agent_executor.py`
 - [MCP Protocol](mcp.md)
 - [Orchestrate Integration](../architecture/orchestrate.md)
 - [RAG Overview](../rag/overview.md)

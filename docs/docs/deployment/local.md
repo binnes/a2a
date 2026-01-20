@@ -248,7 +248,7 @@ The RAG agent configuration supports:
 - **Health Monitoring**: Automatic health checks and recovery
 
 For detailed configuration options, see:
-- [Orchestrate Configuration](orchestrate/rag-agent-config.yml)
+- Orchestrate Configuration: `orchestrate/rag-agent-config.yml`
 - [IBM watsonx Orchestrate Documentation](https://developer.watson-orchestrate.ibm.com)
 
 ### Orchestrate Benefits

@@ -31,7 +31,7 @@ This script will:
 
 ### 3. Configure Credentials
 
-Edit [`config/.env`](../../RAG/config/.env):
+Edit `config/.env`:
 
 ```bash
 # Watsonx.ai Configuration
@@ -107,7 +107,7 @@ curl http://localhost:8000/tools
 
 ### 1. Add Documents
 
-Place your documents in [`data/documents/`](../../RAG/data/documents/):
+Place your documents in `data/documents/`:
 
 ```bash
 cp your-document.pdf RAG/data/documents/
