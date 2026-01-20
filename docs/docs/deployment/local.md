@@ -9,7 +9,7 @@ Local deployment provides a complete RAG environment running on your machine usi
 - Development and testing
 - Learning the system
 - Offline work
-- Cost-free experimentation
+- Low cost experimentation (cloud services used for generating embeddings and LLM inference)
 
 ## Architecture
 
