@@ -2310,13 +2310,13 @@
 <a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">  </span>-t<span class="w"> </span><span class="s2">&quot;Shakespeare Knowledge Agent&quot;</span><span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">  </span>-k<span class="w"> </span>external<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">  </span>--description<span class="w"> </span><span class="s2">&quot;RAG agent with complete works of Shakespeare. Use for questions about Shakespeare&#39;s plays, sonnets, characters, quotes, and literary analysis.&quot;</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">  </span>--api<span class="w"> </span>http://127.0.0.1:8001<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">  </span>--api<span class="w"> </span>http://host.lima.internal:8001<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="w">  </span>--provider<span class="w"> </span>external_chat/A2A/0.3.0<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="w">  </span>-o<span class="w"> </span>rag-agent-config.yml
 </code></pre></div></p>
 </li>
 </ol>
-<p><strong>Note</strong>: Use <code>127.0.0.1</code> instead of <code>localhost</code> to avoid IPv6 connection issues.</p>
+<p><strong>Note</strong>: Use <code>host.lima.internal</code> to access the host machine from Lima VM where Orchestrate runs.</p>
 <p><strong>Knowledge Base</strong>: This agent contains the complete works of William Shakespeare and is ideal for literary questions, character analysis, and quote identification.</p>
 <h3 id="verify-integration">Verify Integration</h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># List imported agents</span>
