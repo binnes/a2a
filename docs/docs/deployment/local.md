@@ -94,12 +94,12 @@ WATSONX_PROJECT_ID=your-project-id-here
 WATSONX_URL=https://us-south.ml.cloud.ibm.com
 
 # Embedding Model Configuration
-EMBEDDING_MODEL=ibm/slate-125m-english-rtrvr
-EMBEDDING_DIMENSION=384
+EMBEDDING_MODEL=ibm/granite-embedding-278m-multilingual
+EMBEDDING_DIMENSION=768
 
 # LLM Configuration
-LLM_MODEL=ibm/granite-13b-chat-v2
-LLM_MAX_TOKENS=2048
+LLM_MODEL=openai/gpt-oss-120b
+LLM_MAX_TOKENS=16384
 LLM_TEMPERATURE=0.7
 
 # Milvus Configuration
