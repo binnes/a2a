@@ -4,17 +4,21 @@ Deploy RAG agents locally using Podman for development and testing.
 
 ## Overview
 
-Local deployment provides a complete RAG environment running on your machine using Podman containers. This is ideal for:
+Local deployment provides a complete RAG environment with containers running on your machine using Podman. The system uses **watsonx.ai** (IBM Cloud) for embedding generation and LLM inferencing, while vector storage and search run locally. This is ideal for:
 
 - Development and testing
 - Learning the system
-- Offline work
-- Low cost experimentation (cloud services used for generating embeddings and LLM inference)
+- Cost-effective experimentation (only pay for watsonx.ai API usage)
+- Local data processing with cloud AI capabilities
 
 ## Architecture
 
 ```mermaid
 graph TB
+    subgraph "IBM Cloud"
+        WX[watsonx.ai]
+    end
+    
     subgraph "Local Machine"
         A2A[A2A Agent<br/>:8001]
         MCP[MCP Server<br/>:8000]
@@ -25,11 +29,27 @@ graph TB
         
         A2A -->|Query| MCP
         MCP -->|Vector Search| Milvus
+        MCP -->|Embeddings| WX
+        MCP -->|LLM Inference| WX
         Milvus -->|Metadata| etcd
         Milvus -->|Storage| MinIO
-        Loader -.->|Load Shakespeare| Milvus
+        Loader -.->|Load Documents| Milvus
+        Loader -->|Generate Embeddings| WX
     end
 ```
+
+**Key Components:**
+
+- **watsonx.ai (IBM Cloud)**: Provides embedding generation and LLM inferencing
+  - Embedding Model: `ibm/granite-embedding-278m-multilingual`
+  - LLM Model: `openai/gpt-oss-120b`
+- **Local Containers**: Run on your machine using Podman
+  - A2A Agent: Agent-to-Agent protocol interface
+  - MCP Server: Model Context Protocol server with RAG tools
+  - Milvus: Vector database for semantic search
+  - etcd: Metadata storage for Milvus
+  - MinIO: Object storage for Milvus
+  - Data Loader: One-time job to load and index documents
 
 ## Prerequisites
 
@@ -146,8 +166,8 @@ The deployment script performs these steps:
 5. **Load Shakespeare Data**
    - Build data loader container
    - Process Shakespeare text
-   - Generate embeddings
-   - Index in Milvus
+   - Generate embeddings via watsonx.ai
+   - Index embeddings in Milvus
 
 ## Service Endpoints
 
