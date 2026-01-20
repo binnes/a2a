@@ -1141,6 +1141,90 @@
   
 </li>
         
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#production-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Production Deployment
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Production Deployment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prerequisites_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Prerequisites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#infrastructure-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Infrastructure Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#required-credentials_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Required Credentials
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#architecture-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture Considerations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Architecture Considerations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#high-availability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        High Availability
+      
+    </span>
+  </a>
+  
+</li>
+        
           <li class="md-nav__item">
   <a href="#security" class="md-nav__link">
     <span class="md-ellipsis">
@@ -2166,6 +2250,90 @@
   
 </li>
         
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#production-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Production Deployment
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Production Deployment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prerequisites_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Prerequisites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#infrastructure-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Infrastructure Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#required-credentials_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Required Credentials
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#architecture-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture Considerations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Architecture Considerations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#high-availability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        High Availability
+      
+    </span>
+  </a>
+  
+</li>
+        
           <li class="md-nav__item">
   <a href="#security" class="md-nav__link">
     <span class="md-ellipsis">
@@ -3103,85 +3271,85 @@
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>curl<span class="w"> </span>http://localhost:8001/health
 <a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
 <a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1"># Check agent capabilities</span>
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
-<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="c1">## Production Deployment</span>
-<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
-<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>This<span class="w"> </span>section<span class="w"> </span>covers<span class="w"> </span>deploying<span class="w"> </span>the<span class="w"> </span>RAG<span class="w"> </span>agent<span class="w"> </span>to<span class="w"> </span>production<span class="w"> </span>IBM<span class="w"> </span>watsonx<span class="w"> </span>Orchestrate<span class="w"> </span>environments<span class="w"> </span><span class="o">(</span>SaaS<span class="w"> </span>or<span class="w"> </span>on-premises<span class="o">)</span>.
-<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>
-<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="c1">### Prerequisites</span>
-<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>
-<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="c1">#### Infrastructure Requirements</span>
-<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>
-<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="m">1</span>.<span class="w"> </span>**IBM<span class="w"> </span>watsonx<span class="w"> </span>Orchestrate<span class="w"> </span>Production<span class="w"> </span>Instance**
-<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="w">   </span>-<span class="w"> </span>SaaS:<span class="w"> </span>Provisioned<span class="w"> </span>through<span class="w"> </span>IBM<span class="w"> </span>Cloud
-<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="w">   </span>-<span class="w"> </span>On-premises:<span class="w"> </span>Installed<span class="w"> </span>on<span class="w"> </span>your<span class="w"> </span>infrastructure
-<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="w">   </span>-<span class="w"> </span>Access<span class="w"> </span>credentials<span class="w"> </span>and<span class="w"> </span>tenant<span class="w"> </span>configuration
-<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>
-<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="m">2</span>.<span class="w"> </span>**Production<span class="w"> </span>RAG<span class="w"> </span>Agent<span class="w"> </span>Deployment**
-<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a><span class="w">   </span>-<span class="w"> </span>Deploy<span class="w"> </span>to<span class="w"> </span>IBM<span class="w"> </span>Code<span class="w"> </span>Engine:<span class="w"> </span><span class="o">[</span>Code<span class="w"> </span>Engine<span class="w"> </span>Guide<span class="o">](</span>ibm-code-engine.md<span class="o">)</span>
-<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a><span class="w">   </span>-<span class="w"> </span>Or<span class="w"> </span>deploy<span class="w"> </span>to<span class="w"> </span>your<span class="w"> </span>Kubernetes<span class="w"> </span>cluster
-<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a><span class="w">   </span>-<span class="w"> </span>Agent<span class="w"> </span>must<span class="w"> </span>be<span class="w"> </span>accessible<span class="w"> </span>via<span class="w"> </span>HTTPS<span class="w"> </span>with<span class="w"> </span>valid<span class="w"> </span>SSL<span class="w"> </span>certificate
-<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a>
-<a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a><span class="m">3</span>.<span class="w"> </span>**Network<span class="w"> </span>Configuration**
-<a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a><span class="w">   </span>-<span class="w"> </span>Orchestrate<span class="w"> </span>must<span class="w"> </span>be<span class="w"> </span>able<span class="w"> </span>to<span class="w"> </span>reach<span class="w"> </span>agent<span class="w"> </span>endpoint
-<a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a><span class="w">   </span>-<span class="w"> </span>Configure<span class="w"> </span>firewall<span class="w"> </span>rules<span class="w"> </span>and<span class="w"> </span>network<span class="w"> </span>policies
-<a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a><span class="w">   </span>-<span class="w"> </span>Set<span class="w"> </span>up<span class="w"> </span>load<span class="w"> </span>balancing<span class="w"> </span><span class="k">if</span><span class="w"> </span>needed
-<a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a>
-<a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a><span class="c1">#### Required Credentials</span>
-<a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a>
-<a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a>-<span class="w"> </span>**Orchestrate<span class="w"> </span>API<span class="w"> </span>Key**:<span class="w"> </span>From<span class="w"> </span>your<span class="w"> </span>Orchestrate<span class="w"> </span>admin<span class="w"> </span>console
-<a id="__codelineno-4-32" name="__codelineno-4-32" href="#__codelineno-4-32"></a>-<span class="w"> </span>**Orchestrate<span class="w"> </span>Tenant<span class="w"> </span>ID**:<span class="w"> </span>Your<span class="w"> </span>organization<span class="err">&#39;</span>s<span class="w"> </span>tenant<span class="w"> </span>identifier
-<a id="__codelineno-4-33" name="__codelineno-4-33" href="#__codelineno-4-33"></a>-<span class="w"> </span>**Watsonx.ai<span class="w"> </span>API<span class="w"> </span>Key**:<span class="w"> </span>Production<span class="w"> </span>API<span class="w"> </span>key<span class="w"> </span>from<span class="w"> </span>IBM<span class="w"> </span>Cloud
-<a id="__codelineno-4-34" name="__codelineno-4-34" href="#__codelineno-4-34"></a>-<span class="w"> </span>**SSL<span class="w"> </span>Certificates**:<span class="w"> </span>For<span class="w"> </span>secure<span class="w"> </span>agent<span class="w"> </span>communication
-<a id="__codelineno-4-35" name="__codelineno-4-35" href="#__codelineno-4-35"></a>
-<a id="__codelineno-4-36" name="__codelineno-4-36" href="#__codelineno-4-36"></a><span class="c1">### Architecture Considerations</span>
-<a id="__codelineno-4-37" name="__codelineno-4-37" href="#__codelineno-4-37"></a>
-<a id="__codelineno-4-38" name="__codelineno-4-38" href="#__codelineno-4-38"></a><span class="c1">#### High Availability</span>
-<a id="__codelineno-4-39" name="__codelineno-4-39" href="#__codelineno-4-39"></a>
-<a id="__codelineno-4-40" name="__codelineno-4-40" href="#__codelineno-4-40"></a><span class="sb">```</span>mermaid
-<a id="__codelineno-4-41" name="__codelineno-4-41" href="#__codelineno-4-41"></a>graph<span class="w"> </span>TB
-<a id="__codelineno-4-42" name="__codelineno-4-42" href="#__codelineno-4-42"></a><span class="w">    </span>subgraph<span class="w"> </span><span class="s2">&quot;IBM watsonx Orchestrate Production&quot;</span>
-<a id="__codelineno-4-43" name="__codelineno-4-43" href="#__codelineno-4-43"></a><span class="w">        </span>LB1<span class="o">[</span>Load<span class="w"> </span>Balancer<span class="o">]</span>
-<a id="__codelineno-4-44" name="__codelineno-4-44" href="#__codelineno-4-44"></a><span class="w">        </span>O1<span class="o">[</span>Orchestrate<span class="w"> </span>Instance<span class="w"> </span><span class="m">1</span><span class="o">]</span>
-<a id="__codelineno-4-45" name="__codelineno-4-45" href="#__codelineno-4-45"></a><span class="w">        </span>O2<span class="o">[</span>Orchestrate<span class="w"> </span>Instance<span class="w"> </span><span class="m">2</span><span class="o">]</span>
-<a id="__codelineno-4-46" name="__codelineno-4-46" href="#__codelineno-4-46"></a><span class="w">        </span>O3<span class="o">[</span>Orchestrate<span class="w"> </span>Instance<span class="w"> </span><span class="m">3</span><span class="o">]</span>
-<a id="__codelineno-4-47" name="__codelineno-4-47" href="#__codelineno-4-47"></a><span class="w">    </span>end
-<a id="__codelineno-4-48" name="__codelineno-4-48" href="#__codelineno-4-48"></a>
-<a id="__codelineno-4-49" name="__codelineno-4-49" href="#__codelineno-4-49"></a><span class="w">    </span>subgraph<span class="w"> </span><span class="s2">&quot;RAG Agent Cluster&quot;</span>
-<a id="__codelineno-4-50" name="__codelineno-4-50" href="#__codelineno-4-50"></a><span class="w">        </span>LB2<span class="o">[</span>Load<span class="w"> </span>Balancer<span class="o">]</span>
-<a id="__codelineno-4-51" name="__codelineno-4-51" href="#__codelineno-4-51"></a><span class="w">        </span>A1<span class="o">[</span>Agent<span class="w"> </span>Instance<span class="w"> </span><span class="m">1</span><span class="o">]</span>
-<a id="__codelineno-4-52" name="__codelineno-4-52" href="#__codelineno-4-52"></a><span class="w">        </span>A2<span class="o">[</span>Agent<span class="w"> </span>Instance<span class="w"> </span><span class="m">2</span><span class="o">]</span>
-<a id="__codelineno-4-53" name="__codelineno-4-53" href="#__codelineno-4-53"></a><span class="w">        </span>A3<span class="o">[</span>Agent<span class="w"> </span>Instance<span class="w"> </span><span class="m">3</span><span class="o">]</span>
-<a id="__codelineno-4-54" name="__codelineno-4-54" href="#__codelineno-4-54"></a><span class="w">    </span>end
-<a id="__codelineno-4-55" name="__codelineno-4-55" href="#__codelineno-4-55"></a>
-<a id="__codelineno-4-56" name="__codelineno-4-56" href="#__codelineno-4-56"></a><span class="w">    </span>subgraph<span class="w"> </span><span class="s2">&quot;Backend Services&quot;</span>
-<a id="__codelineno-4-57" name="__codelineno-4-57" href="#__codelineno-4-57"></a><span class="w">        </span>MCP<span class="o">[</span>MCP<span class="w"> </span>Server<span class="w"> </span>Cluster<span class="o">]</span>
-<a id="__codelineno-4-58" name="__codelineno-4-58" href="#__codelineno-4-58"></a><span class="w">        </span>Milvus<span class="o">[</span>Milvus<span class="w"> </span>Cluster<span class="o">]</span>
-<a id="__codelineno-4-59" name="__codelineno-4-59" href="#__codelineno-4-59"></a><span class="w">        </span>WX<span class="o">[</span>watsonx.ai<span class="o">]</span>
-<a id="__codelineno-4-60" name="__codelineno-4-60" href="#__codelineno-4-60"></a><span class="w">    </span>end
-<a id="__codelineno-4-61" name="__codelineno-4-61" href="#__codelineno-4-61"></a>
-<a id="__codelineno-4-62" name="__codelineno-4-62" href="#__codelineno-4-62"></a><span class="w">    </span>LB1<span class="w"> </span>--&gt;<span class="w"> </span>O1
-<a id="__codelineno-4-63" name="__codelineno-4-63" href="#__codelineno-4-63"></a><span class="w">    </span>LB1<span class="w"> </span>--&gt;<span class="w"> </span>O2
-<a id="__codelineno-4-64" name="__codelineno-4-64" href="#__codelineno-4-64"></a><span class="w">    </span>LB1<span class="w"> </span>--&gt;<span class="w"> </span>O3
-<a id="__codelineno-4-65" name="__codelineno-4-65" href="#__codelineno-4-65"></a>
-<a id="__codelineno-4-66" name="__codelineno-4-66" href="#__codelineno-4-66"></a><span class="w">    </span>O1<span class="w"> </span>--&gt;<span class="w"> </span>LB2
-<a id="__codelineno-4-67" name="__codelineno-4-67" href="#__codelineno-4-67"></a><span class="w">    </span>O2<span class="w"> </span>--&gt;<span class="w"> </span>LB2
-<a id="__codelineno-4-68" name="__codelineno-4-68" href="#__codelineno-4-68"></a><span class="w">    </span>O3<span class="w"> </span>--&gt;<span class="w"> </span>LB2
-<a id="__codelineno-4-69" name="__codelineno-4-69" href="#__codelineno-4-69"></a>
-<a id="__codelineno-4-70" name="__codelineno-4-70" href="#__codelineno-4-70"></a><span class="w">    </span>LB2<span class="w"> </span>--&gt;<span class="w"> </span>A1
-<a id="__codelineno-4-71" name="__codelineno-4-71" href="#__codelineno-4-71"></a><span class="w">    </span>LB2<span class="w"> </span>--&gt;<span class="w"> </span>A2
-<a id="__codelineno-4-72" name="__codelineno-4-72" href="#__codelineno-4-72"></a><span class="w">    </span>LB2<span class="w"> </span>--&gt;<span class="w"> </span>A3
-<a id="__codelineno-4-73" name="__codelineno-4-73" href="#__codelineno-4-73"></a>
-<a id="__codelineno-4-74" name="__codelineno-4-74" href="#__codelineno-4-74"></a><span class="w">    </span>A1<span class="w"> </span>--&gt;<span class="w"> </span>MCP
-<a id="__codelineno-4-75" name="__codelineno-4-75" href="#__codelineno-4-75"></a><span class="w">    </span>A2<span class="w"> </span>--&gt;<span class="w"> </span>MCP
-<a id="__codelineno-4-76" name="__codelineno-4-76" href="#__codelineno-4-76"></a><span class="w">    </span>A3<span class="w"> </span>--&gt;<span class="w"> </span>MCP
-<a id="__codelineno-4-77" name="__codelineno-4-77" href="#__codelineno-4-77"></a>
-<a id="__codelineno-4-78" name="__codelineno-4-78" href="#__codelineno-4-78"></a><span class="w">    </span>MCP<span class="w"> </span>--&gt;<span class="w"> </span>Milvus
-<a id="__codelineno-4-79" name="__codelineno-4-79" href="#__codelineno-4-79"></a><span class="w">    </span>MCP<span class="w"> </span>--&gt;<span class="w"> </span>WX
-<a id="__codelineno-4-80" name="__codelineno-4-80" href="#__codelineno-4-80"></a>
-<a id="__codelineno-4-81" name="__codelineno-4-81" href="#__codelineno-4-81"></a><span class="w">    </span>style<span class="w"> </span>LB1<span class="w"> </span>fill:#0f62fe
-<a id="__codelineno-4-82" name="__codelineno-4-82" href="#__codelineno-4-82"></a><span class="w">    </span>style<span class="w"> </span>LB2<span class="w"> </span>fill:#0f62fe
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>curl<span class="w"> </span>http://localhost:8001/.well-known/agent-card.json
 </code></pre></div>
+<h2 id="production-deployment">Production Deployment</h2>
+<p>This section covers deploying the RAG agent to production IBM watsonx Orchestrate environments (SaaS or on-premises).</p>
+<h3 id="prerequisites_1">Prerequisites</h3>
+<h4 id="infrastructure-requirements">Infrastructure Requirements</h4>
+<ol>
+<li><strong>IBM watsonx Orchestrate Production Instance</strong></li>
+<li>SaaS: Provisioned through IBM Cloud</li>
+<li>On-premises: Installed on your infrastructure</li>
+<li>
+<p>Access credentials and tenant configuration</p>
+</li>
+<li>
+<p><strong>Production RAG Agent Deployment</strong></p>
+</li>
+<li>Deploy to IBM Code Engine: <a href="../ibm-code-engine/">Code Engine Guide</a></li>
+<li>Or deploy to your Kubernetes cluster</li>
+<li>
+<p>Agent must be accessible via HTTPS with valid SSL certificate</p>
+</li>
+<li>
+<p><strong>Network Configuration</strong></p>
+</li>
+<li>Orchestrate must be able to reach agent endpoint</li>
+<li>Configure firewall rules and network policies</li>
+<li>Set up load balancing if needed</li>
+</ol>
+<h4 id="required-credentials_1">Required Credentials</h4>
+<ul>
+<li><strong>Orchestrate API Key</strong>: From your Orchestrate admin console</li>
+<li><strong>Orchestrate Tenant ID</strong>: Your organization's tenant identifier</li>
+<li><strong>Watsonx.ai API Key</strong>: Production API key from IBM Cloud</li>
+<li><strong>SSL Certificates</strong>: For secure agent communication</li>
+</ul>
+<h3 id="architecture-considerations">Architecture Considerations</h3>
+<h4 id="high-availability">High Availability</h4>
+<pre class="mermaid"><code>graph TB
+    subgraph "IBM watsonx Orchestrate Production"
+        LB1[Load Balancer]
+        O1[Orchestrate Instance 1]
+        O2[Orchestrate Instance 2]
+        O3[Orchestrate Instance 3]
+    end
+
+    subgraph "RAG Agent Cluster"
+        LB2[Load Balancer]
+        A1[Agent Instance 1]
+        A2[Agent Instance 2]
+        A3[Agent Instance 3]
+    end
+
+    subgraph "Backend Services"
+        MCP[MCP Server Cluster]
+        Milvus[Milvus Cluster]
+        WX[watsonx.ai]
+    end
+
+    LB1 --&gt; O1
+    LB1 --&gt; O2
+    LB1 --&gt; O3
+
+    O1 --&gt; LB2
+    O2 --&gt; LB2
+    O3 --&gt; LB2
+
+    LB2 --&gt; A1
+    LB2 --&gt; A2
+    LB2 --&gt; A3
+
+    A1 --&gt; MCP
+    A2 --&gt; MCP
+    A3 --&gt; MCP
+
+    MCP --&gt; Milvus
+    MCP --&gt; WX
+
+    style LB1 fill:#0f62fe
+    style LB2 fill:#0f62fe</code></pre>
 <p><strong>Key Considerations:</strong></p>
 <ul>
 <li><strong>Multiple Instances</strong>: Deploy 3+ agent instances for redundancy</li>
@@ -3954,9 +4122,9 @@
 </ul>
 <h3 id="configuration_1">Configuration</h3>
 <ul>
-<li><a href="../../orchestrate/rag-agent-config.yml">Agent Configuration File</a></li>
-<li><a href="../../orchestrate/.env.example">Environment Variables</a></li>
-<li><a href="../../orchestrate/scripts/startOrchestrate.sh">Start Script</a></li>
+<li>Agent Configuration File: <code>orchestrate/rag-agent-config.yml</code></li>
+<li>Environment Variables: <code>orchestrate/.env.example</code></li>
+<li>Start Script: <code>orchestrate/scripts/startOrchestrate.sh</code></li>
 </ul>
 <h3 id="support">Support</h3>
 <ul>
