@@ -39,11 +39,17 @@ curl -X POST http://localhost:8000/tools/rag_query \
 │   ├── scripts/            # Automation scripts
 │   └── tests/              # Test suite (34 tests, 100% passing)
 │
+├── orchestrate/            # IBM watsonx Orchestrate integration
+│   ├── rag-agent-config.yml  # Agent configuration
+│   ├── scripts/            # Orchestrate startup scripts
+│   └── .env                # Orchestrate credentials
+│
 └── docs/                   # MkDocs documentation
     └── docs/
         ├── rag/            # RAG agent documentation
         ├── architecture/   # System architecture
-        └── protocols/      # A2A and MCP specifications
+        ├── protocols/      # A2A and MCP specifications
+        └── deployment/     # Deployment guides
 ```
 
 ## Architecture
@@ -116,6 +122,11 @@ Complete documentation is available at: **https://binnes.github.io/a2a/**
 - [Configuration](https://binnes.github.io/a2a/rag/configuration/) - Configuration options
 - [Testing](https://binnes.github.io/a2a/rag/testing/) - Test suite documentation
 - [Troubleshooting](https://binnes.github.io/a2a/rag/troubleshooting/) - Common issues
+
+### Deployment
+- [Local Deployment](https://binnes.github.io/a2a/deployment/local/) - Podman/Docker setup
+- [IBM watsonx Orchestrate](https://binnes.github.io/a2a/deployment/orchestrate/) - Enterprise orchestration
+- [IBM Code Engine](https://binnes.github.io/a2a/deployment/ibm-code-engine/) - Cloud deployment
 
 ### Platform
 - [Architecture](https://binnes.github.io/a2a/architecture/overview/) - System architecture

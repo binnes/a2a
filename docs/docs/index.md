@@ -138,6 +138,12 @@ curl -X POST http://localhost:8000/tools/rag_query \
 - [Testing](rag/testing.md) - Testing guide and results
 - [Troubleshooting](rag/troubleshooting.md) - Common issues and solutions
 
+### Deployment Options
+
+- [Local Deployment](deployment/local.md) - Deploy with Podman for development
+- [IBM watsonx Orchestrate](deployment/orchestrate.md) - Enterprise orchestration platform
+- [IBM Code Engine](deployment/ibm-code-engine.md) - Cloud-native deployment
+
 ### Platform Documentation
 
 1. [Architecture Overview](architecture/overview.md) - System architecture

@@ -66,13 +66,13 @@ class Settings(BaseSettings):
     mcp_server_reload: bool = Field(default=False, description="Enable auto-reload")
 
     # A2A Agent Configuration
-    a2a_agent_id: str = Field(default="rag-agent", description="A2A agent ID")
+    a2a_agent_id: str = Field(default="shakespeare-rag-agent", description="A2A agent ID")
     a2a_agent_name: str = Field(
-        default="RAG Knowledge Agent",
+        default="Shakespeare Knowledge Agent",
         description="A2A agent name",
     )
     a2a_agent_description: str = Field(
-        default="Agent for querying RAG knowledge base using MCP tools",
+        default="RAG agent with complete works of Shakespeare. Use for questions about Shakespeare's plays, sonnets, characters, quotes, and literary analysis.",
         description="A2A agent description",
     )
 

@@ -1,0 +1,14 @@
+spec_version: v1
+kind: external
+name: shakespeare-rag-agent
+description: RAG agent with complete works of Shakespeare. Use for questions about
+  Shakespeare's plays, sonnets, characters, quotes, and literary analysis.
+context_access_enabled: true
+context_variables: []
+title: Shakespeare Knowledge Agent
+api_url: http://127.0.0.1:8001
+auth_scheme: NONE
+auth_config: {}
+provider: external_chat/A2A/0.3.0
+chat_params: {}
+config: {}

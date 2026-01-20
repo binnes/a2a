@@ -182,6 +182,85 @@ After deployment, services are available at:
 | Milvus | localhost:19530 | Vector database |
 | MinIO Console | http://localhost:9001 | Object storage UI |
 
+## IBM watsonx Orchestrate Integration
+
+Once the RAG agent is deployed locally, you can integrate it with IBM watsonx Orchestrate Developer Edition for enterprise-grade orchestration and workflow management.
+
+### Prerequisites
+
+1. **Orchestrate Developer Edition**: Download and install from [IBM Developer](https://developer.watson-orchestrate.ibm.com)
+2. **Entitlement Key**: Obtain from IBM Marketplace (wxo/myibm)
+3. **Running RAG Agent**: Ensure the A2A agent is running on http://localhost:8001
+
+### Setup Orchestrate
+
+1. **Configure Environment**:
+   ```bash
+   cd orchestrate
+   cp .env.example .env
+   # Edit .env with your credentials
+   ```
+
+2. **Start Orchestrate**:
+   ```bash
+   cd orchestrate
+   bash scripts/startOrchestrate.sh
+   ```
+
+3. **Create and Import Shakespeare Agent**:
+   ```bash
+   # Activate virtual environment
+   source .venv/bin/activate
+   
+   # Create and import Shakespeare knowledge agent
+   orchestrate agents create \
+     -n shakespeare-rag-agent \
+     -t "Shakespeare Knowledge Agent" \
+     -k external \
+     --description "RAG agent with complete works of Shakespeare. Use for questions about Shakespeare's plays, sonnets, characters, quotes, and literary analysis." \
+     --api http://127.0.0.1:8001 \
+     --provider external_chat/A2A/0.3.0 \
+     -o rag-agent-config.yml
+   ```
+   
+   **Note**: Use `127.0.0.1` instead of `localhost` to avoid IPv6 connection issues.
+   
+   **Knowledge Base**: This agent contains the complete works of William Shakespeare and is ideal for literary questions, character analysis, and quote identification.
+
+### Verify Integration
+
+```bash
+# List imported agents
+orchestrate agents list
+
+# Test agent health
+curl http://localhost:8001/health
+```
+
+### Configuration Options
+
+The RAG agent configuration supports:
+
+- **A2A Protocol**: Full Agent-to-Agent communication
+- **Capabilities**: rag_query, knowledge_search, document_qa
+- **Resource Limits**: CPU and memory constraints
+- **Retry Policies**: Exponential backoff with configurable limits
+- **Health Monitoring**: Automatic health checks and recovery
+
+For detailed configuration options, see:
+- [Orchestrate Configuration](orchestrate/rag-agent-config.yml)
+- [IBM watsonx Orchestrate Documentation](https://developer.watson-orchestrate.ibm.com)
+
+### Orchestrate Benefits
+
+Integrating with Orchestrate provides:
+
+- **Workflow Orchestration**: Coordinate multiple agents and services
+- **Enterprise Security**: OAuth 2.0, RBAC, audit logging
+- **Scalability**: Dynamic scaling based on workload
+- **Monitoring**: Comprehensive metrics and alerting
+- **Integration**: Connect to 100+ enterprise systems
+
 ## Testing the Deployment
 
 ### Health Checks
