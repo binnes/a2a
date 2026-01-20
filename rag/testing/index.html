@@ -1903,7 +1903,7 @@
 <a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>curl<span class="w"> </span>http://localhost:8000/health
 </code></pre></div>
 <h3 id="test-configuration">Test Configuration</h3>
-<p>Tests use <a href="../../RAG/pytest.ini"><code>pytest.ini</code></a> for configuration:</p>
+<p>Tests use <code>pytest.ini</code> (located in the RAG directory) for configuration:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">[pytest]</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="na">testpaths</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">tests</span>
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="na">python_files</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">test_*.py</span>
@@ -1917,7 +1917,7 @@
 </code></pre></div>
 <h2 id="test-categories">Test Categories</h2>
 <h3 id="1-a2a-agent-tests">1. A2A Agent Tests</h3>
-<p><strong>Location</strong>: <a href="../../RAG/tests/test_a2a_agent.py"><code>tests/test_a2a_agent.py</code></a></p>
+<p><strong>Location</strong>: <code>RAG/tests/test_a2a_agent.py</code></p>
 <p><strong>Coverage</strong>:
 - Agent initialization
 - A2A message handling
@@ -1949,7 +1949,7 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>tests/<span class="w"> </span>-v<span class="w"> </span>-k<span class="w"> </span><span class="s2">&quot;agent&quot;</span>
 </code></pre></div></p>
 <h3 id="2-mcp-server-integration-tests">2. MCP Server Integration Tests</h3>
-<p><strong>Location</strong>: <a href="../../RAG/tests/test_mcp_server_integration.py"><code>tests/test_mcp_server_integration.py</code></a></p>
+<p><strong>Location</strong>: <code>RAG/tests/test_mcp_server_integration.py</code></p>
 <p><strong>Coverage</strong>:
 - Health endpoint functionality
 - RAG query endpoint
@@ -1982,7 +1982,7 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>tests/test_mcp_server_integration.py<span class="w"> </span>-v
 </code></pre></div></p>
 <h3 id="3-mcp-tool-client-tests">3. MCP Tool Client Tests</h3>
-<p><strong>Location</strong>: <a href="../../RAG/tests/test_mcp_tool_client.py"><code>tests/test_mcp_tool_client.py</code></a></p>
+<p><strong>Location</strong>: <code>RAG/tests/test_mcp_tool_client.py</code></p>
 <p><strong>Coverage</strong>:
 - Client initialization
 - RAG query tool
@@ -2011,7 +2011,7 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>tests/test_mcp_tool_client.py<span class="w"> </span>-v
 </code></pre></div></p>
 <h3 id="4-document-processor-tests">4. Document Processor Tests</h3>
-<p><strong>Location</strong>: <a href="../../RAG/tests/test_document_processor.py"><code>tests/test_document_processor.py</code></a></p>
+<p><strong>Location</strong>: <code>RAG/tests/test_document_processor.py</code></p>
 <p><strong>Coverage</strong>:
 - Text file processing
 - Text chunking with overlap
@@ -2039,7 +2039,7 @@
 </code></pre></div></p>
 <h2 id="test-data">Test Data</h2>
 <h3 id="shakespeare-dataset">Shakespeare Dataset</h3>
-<p><strong>File</strong>: <a href="../../RAG/data/reference/complete%20works%20of%20Shakespear.txt"><code>data/reference/complete works of Shakespear.txt</code></a></p>
+<p><strong>File</strong>: <code>RAG/data/reference/complete works of Shakespear.txt</code></p>
 <ul>
 <li><strong>Size</strong>: 196,396 lines</li>
 <li><strong>Content</strong>: Complete works of William Shakespeare</li>
